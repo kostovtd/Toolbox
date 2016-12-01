@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/fab_options_ic_overflow">
+    <target
+        android:animation="@animator/fab_options_overflow_to_close"
+        android:name="name"/>
+</animated-vector>

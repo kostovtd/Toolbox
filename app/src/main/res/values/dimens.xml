@@ -31,4 +31,11 @@
     <dimen name="large_text_size">18sp</dimen>
     <dimen name="button_default_text_size">15sp</dimen>
     <dimen name="asterisk_text_size">20sp</dimen>
+    
+    
+    <!-- FAB OPTIONS DIMENS -->
+    <dimen name="fab_options_vector_dimensions">24dp</dimen>
+    <dimen name="fab_options_radius">20dp</dimen>
+    <dimen name="fab_options_icon_size">20dp</dimen>
+    <dimen name="fab_options_button_padding">8dp</dimen>
 </resources>
