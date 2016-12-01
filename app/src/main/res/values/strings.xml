@@ -9,8 +9,13 @@
 
     <!-- CUSTOM VIEWS SCREEN -->
     <string name="custom_views_screen_title">Custom Views</string>
+    <string name="custom_views_fab_options">Fab Options</string>
 
 
     <!-- TRANSITIONS SCREEN -->
     <string name="transitions_screen_title">Transitions</string>
+
+
+    <!-- FAB OPTIONS SCREEN -->
+    <string name="fab_options_screen_title">Fab Options</string>
 </resources>
