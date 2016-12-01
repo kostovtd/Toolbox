@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Toolbox</string>
+
+    <!-- MAIN SCREEN -->
+    <string name="main_screen_title">Main</string>
+    <string name="main_custom_views">Custom Views</string>
+    <string name="main_transitions">Transitions</string>
+
+
+    <!-- CUSTOM VIEWS SCREEN -->
+    <string name="custom_views_screen_title">Custom Views</string>
+
+
+    <!-- TRANSITIONS SCREEN -->
+    <string name="transitions_screen_title">Transitions</string>
 </resources>

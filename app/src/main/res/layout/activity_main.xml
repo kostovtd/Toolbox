@@ -3,12 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:paddingLeft="@dimen/horizontal_padding"
+    android:paddingRight="@dimen/horizontal_padding">
 
-    <TextView
+    <Button
+        android:id="@+id/button_custom_views"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="MAIN ACTIVITY"/>
+        android:layout_height="wrap_content"
+        android:text="@string/main_custom_views"/>
+
+    <Button
+        android:id="@+id/button_transitions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/main_transitions"/>
 
 </LinearLayout>
