@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/fab_options_layout_height">
+
+    <View
+        android:id="@+id/background"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/fab_options_button_layout_height"
+        android:layout_gravity="center"
+        android:background="@drawable/fab_options_background" />
+
+    <com.toolbox.kostovtd.fabOptions.FabOptionsButtonContainer
+        android:id="@+id/button_container"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/fab_options_button_layout_height"
+        android:layout_gravity="center"
+        android:clipChildren="false"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/fab_options_button_padding"
+        android:paddingStart="@dimen/fab_options_button_padding" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_options_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+</FrameLayout>

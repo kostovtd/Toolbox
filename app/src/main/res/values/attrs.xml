@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FabOptions">
+        <attr name="button_menu" format="reference" type="menu" />
+    </declare-styleable>
+</resources>

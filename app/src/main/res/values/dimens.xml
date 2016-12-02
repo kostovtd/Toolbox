@@ -38,4 +38,6 @@
     <dimen name="fab_options_radius">20dp</dimen>
     <dimen name="fab_options_icon_size">20dp</dimen>
     <dimen name="fab_options_button_padding">8dp</dimen>
+    <dimen name="fab_options_button_layout_height">44dp</dimen>
+    <dimen name="fab_options_layout_height">98dp</dimen>
 </resources>
