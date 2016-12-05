@@ -10,6 +10,7 @@ import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.AppCompatImageView;
 import android.transition.ChangeBounds;
 import android.transition.ChangeTransform;
+import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
 import android.util.AttributeSet;
@@ -25,13 +26,14 @@ import com.toolbox.kostovtd.R;
  * Created by todor.kostov on 2.12.2016 г..
  */
 
-public class FabOptions extends FrameLayout implements View.OnClickListener {
+public class FabOptions extends FrameLayout implements View.OnClickListener, Transition.TransitionListener {
 
     private static final String TAG = FabOptions.class.getSimpleName();
     private static final int NO_DIMENSION = 0;
     private static final long CLOSE_MORPH_TRANSFORM_DURATION = 70;
 
     private boolean mIsOpen;
+    private boolean mIsTransitionRunning = false;
     private OnClickListener mListener;
     private Menu menu;
     private FloatingActionButton mFloatingActionButton;
@@ -103,6 +105,10 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if(mIsTransitionRunning) {
+            return;
+        }
+
         switch (v.getId()) {
             case R.id.fab_options_fab:
                 if(mIsOpen) {
@@ -141,7 +147,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.fab_options_ic_overflow_animatable, null);
         mFloatingActionButton.setImageDrawable(drawable);
         drawable.start();
-        TransitionManager.beginDelayedTransition(this, new OpenMorphTransition(mButtonContainer));
+        TransitionManager.beginDelayedTransition(this, new OpenMorphTransition(mButtonContainer).addListener(this));
         animateButtons(true);
         animateBackground(true);
         mIsOpen = true;
@@ -152,12 +158,37 @@ public class FabOptions extends FrameLayout implements View.OnClickListener {
         AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.fab_options_ic_close_animatable, null);
         mFloatingActionButton.setImageDrawable(drawable);
         drawable.start();
-        TransitionManager.beginDelayedTransition(this, new CloseMorphTransition(mButtonContainer));
+        TransitionManager.beginDelayedTransition(this, new CloseMorphTransition(mButtonContainer).addListener(this));
         animateButtons(false);
         animateBackground(false);
         mIsOpen = false;
     }
 
+
+    @Override
+    public void onTransitionStart(Transition transition) {
+        mIsTransitionRunning = true;
+    }
+
+    @Override
+    public void onTransitionEnd(Transition transition) {
+        mIsTransitionRunning = false;
+    }
+
+    @Override
+    public void onTransitionCancel(Transition transition) {
+
+    }
+
+    @Override
+    public void onTransitionPause(Transition transition) {
+
+    }
+
+    @Override
+    public void onTransitionResume(Transition transition) {
+
+    }
 
     private void animateButtons(boolean isOpen) {
         for(int i=0; i < mButtonContainer.getChildCount(); i++) {
