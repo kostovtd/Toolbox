@@ -65,6 +65,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener, Tra
         mBackground = findViewById(R.id.background);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_options_fab);
         mFloatingActionButton.setOnClickListener(this);
+        mFloatingActionButton.setVisibility(GONE);
         mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.button_container);
     }
 
@@ -83,7 +84,8 @@ public class FabOptions extends FrameLayout implements View.OnClickListener, Tra
         menuInflater.inflate(menuId, menu);
 
         addButtonsFromMenu(context, menu);
-        close();
+//        close();
+        open();
     }
 
 
@@ -105,6 +107,8 @@ public class FabOptions extends FrameLayout implements View.OnClickListener, Tra
 
     @Override
     public void onClick(View v) {
+        // if there is a running transition
+        // then do nothing
         if(mIsTransitionRunning) {
             return;
         }
@@ -136,7 +140,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener, Tra
         super.onLayout(changed, left, top, right, bottom);
         if(mIsOpen) {
             ViewGroup.LayoutParams backgroundLayoutParams = mBackground.getLayoutParams();
-            backgroundLayoutParams.width = mButtonContainer.getMeasuredWidth();
+            backgroundLayoutParams.width = mButtonContainer.getMeasuredWidth() + mFloatingActionButton.getMeasuredWidth();
             backgroundLayoutParams.height = mButtonContainer.getMeasuredHeight();
             mBackground.setLayoutParams(backgroundLayoutParams);
         }
@@ -177,17 +181,17 @@ public class FabOptions extends FrameLayout implements View.OnClickListener, Tra
 
     @Override
     public void onTransitionCancel(Transition transition) {
-
+        mIsTransitionRunning = false;
     }
 
     @Override
     public void onTransitionPause(Transition transition) {
-
+        mIsTransitionRunning = false;
     }
 
     @Override
     public void onTransitionResume(Transition transition) {
-
+        mIsTransitionRunning = true;
     }
 
     private void animateButtons(boolean isOpen) {

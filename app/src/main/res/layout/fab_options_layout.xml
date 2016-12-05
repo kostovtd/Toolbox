@@ -3,12 +3,13 @@
     android:layout_width="wrap_content"
     android:layout_height="@dimen/fab_options_layout_height">
 
-    <View
-        android:id="@+id/background"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fab_options_button_layout_height"
-        android:layout_gravity="center"
-        android:background="@drawable/fab_options_background" />
+
+        <View
+            android:id="@+id/background"
+            android:layout_width="0dp"
+            android:layout_gravity="center"
+            android:layout_height="@dimen/fab_options_button_layout_height"
+            android:background="@drawable/fab_options_background" />
 
     <com.toolbox.kostovtd.fabOptions.FabOptionsButtonContainer
         android:id="@+id/button_container"

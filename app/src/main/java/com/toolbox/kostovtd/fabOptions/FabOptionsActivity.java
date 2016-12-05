@@ -31,7 +31,6 @@ public class FabOptionsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        fabOptionsButton.setButtonsMenu(this, R.menu.menu_fab_options);
         fabOptionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
