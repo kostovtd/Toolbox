@@ -16,7 +16,9 @@ import com.toolbox.kostovtd.R;
 
 public class FabOptionsButtonContainer extends RelativeLayout {
 
-    int previousButtonId;
+    private int numberOfOptionButtons;
+    private int previousButtonId;
+    private int currentButtonIndex;
 
     public FabOptionsButtonContainer(Context context) {
         this(context, null);
@@ -30,6 +32,13 @@ public class FabOptionsButtonContainer extends RelativeLayout {
         super(context, attrs, defStyleAttr);
     }
 
+    public int getNumberOfOptionButtons() {
+        return numberOfOptionButtons;
+    }
+
+    public void setNumberOfOptionButtons(int numberOfOptionButtons) {
+        this.numberOfOptionButtons = numberOfOptionButtons;
+    }
 
     public AppCompatImageView addButton(Context context, int buttonId, CharSequence title, Drawable drawableIcon) {
         return addButton(context, buttonId, title, drawableIcon, null);
@@ -47,8 +56,14 @@ public class FabOptionsButtonContainer extends RelativeLayout {
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
 
+        currentButtonIndex++;
+
         if(previousButtonId != 0) {
-            params.addRule(RelativeLayout.RIGHT_OF, previousButtonId);
+            if(currentButtonIndex <= numberOfOptionButtons / 2) {
+                params.addRule(RelativeLayout.RIGHT_OF, previousButtonId);
+            } else {
+                params.addRule(RelativeLayout.LEFT_OF, previousButtonId);
+            }
         } else {
             params.addRule(RelativeLayout.ALIGN_PARENT_START);
         }

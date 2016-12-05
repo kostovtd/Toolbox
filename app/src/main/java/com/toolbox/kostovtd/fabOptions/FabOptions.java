@@ -90,6 +90,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener, Tra
 
 
     private void addButtonsFromMenu(Context context, Menu menu) {
+        mButtonContainer.setNumberOfOptionButtons(menu.size());
         for(int i=0; i < menu.size(); i++) {
             MenuItem menuItem = menu.getItem(i);
             addButton(context, menuItem);
