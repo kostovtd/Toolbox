@@ -65,7 +65,6 @@ public class FabOptions extends FrameLayout implements View.OnClickListener, Tra
         mBackground = findViewById(R.id.background);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_options_fab);
         mFloatingActionButton.setOnClickListener(this);
-        mFloatingActionButton.setVisibility(GONE);
         mButtonContainer = (FabOptionsButtonContainer) findViewById(R.id.button_container);
     }
 
@@ -84,8 +83,7 @@ public class FabOptions extends FrameLayout implements View.OnClickListener, Tra
         menuInflater.inflate(menuId, menu);
 
         addButtonsFromMenu(context, menu);
-//        close();
-        open();
+        close();
     }
 
 

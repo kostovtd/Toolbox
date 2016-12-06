@@ -14,11 +14,12 @@ import com.toolbox.kostovtd.R;
  * Created by todor.kostov on 2.12.2016 г..
  */
 
-public class FabOptionsButtonContainer extends RelativeLayout {
+public class FabOptionsButtonContainer extends LinearLayout {
 
     private int numberOfOptionButtons;
-    private int previousButtonId;
     private int currentButtonIndex;
+    private boolean isMarginSet = false;
+    private int margin = 0;
 
     public FabOptionsButtonContainer(Context context) {
         this(context, null);
@@ -52,20 +53,15 @@ public class FabOptionsButtonContainer extends RelativeLayout {
         fabOptionsButton.setContentDescription(title);
         fabOptionsButton.setId(buttonId);
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 
         currentButtonIndex++;
 
-        if(previousButtonId != 0) {
-            if(currentButtonIndex <= numberOfOptionButtons / 2) {
-                params.addRule(RelativeLayout.RIGHT_OF, previousButtonId);
-            } else {
-                params.addRule(RelativeLayout.LEFT_OF, previousButtonId);
-            }
-        } else {
-            params.addRule(RelativeLayout.ALIGN_PARENT_START);
+        if(!isMarginSet && currentButtonIndex > numberOfOptionButtons / 2) {
+            params.setMargins(300, 0, 0, 0);
+            isMarginSet = true;
         }
 
         fabOptionsButton.setLayoutParams(params);
@@ -76,7 +72,10 @@ public class FabOptionsButtonContainer extends RelativeLayout {
             addView(fabOptionsButton, index);
         }
 
-        previousButtonId = buttonId;
         return fabOptionsButton;
+    }
+
+    public void setMargin(int margin) {
+        this.margin = margin;
     }
 }
