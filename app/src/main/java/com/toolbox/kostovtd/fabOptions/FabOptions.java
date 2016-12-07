@@ -14,10 +14,13 @@ import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.toolbox.kostovtd.R;
@@ -88,13 +91,50 @@ public class FabOptions extends FrameLayout implements View.OnClickListener, Tra
 
 
     private void addButtonsFromMenu(Context context, Menu menu) {
+        Log.d(TAG, "addButtonsFromMenu: hit");
         mButtonContainer.setNumberOfOptionButtons(menu.size());
+        mButtonContainer.setSectionMargin(getViewWidthBeforeDisplayed(context, mFloatingActionButton));
         for(int i=0; i < menu.size(); i++) {
             MenuItem menuItem = menu.getItem(i);
             addButton(context, menuItem);
         }
     }
 
+
+    /**
+     * Return the width of a given view before being displayed.
+     * @param context A {@link Context} object used to obtain a particular system service.
+     * @param view The {@link View} which width will be returned.
+     * @return The view's width, or -1 if an error occurred.
+     */
+    private int getViewWidthBeforeDisplayed(Context context, View view) {
+        int viewWidth = -1;
+        if(context != null && view != null) {
+            WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            Display display = windowManager.getDefaultDisplay();
+            view.measure(display.getWidth(), display.getHeight());
+            viewWidth = view.getMeasuredWidth();
+        }
+        return  viewWidth;
+    }
+
+
+    /**
+     * Return the height of a given view before being displayed.
+     * @param context A {@link Context} object used to obtain a particular system service.
+     * @param view The {@link View} which width will be returned.
+     * @return The view's height, or -1 if an error occurred.
+     */
+    private int getViewHeightBeforeDisplayed(Context context, View view) {
+        int viewHeight = -1;
+        if(context != null && view != null) {
+            WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            Display display = windowManager.getDefaultDisplay();
+            view.measure(display.getWidth(), display.getHeight());
+            viewHeight = view.getMeasuredHeight();
+        }
+        return viewHeight;
+    }
 
 
     private void addButton(Context context, MenuItem menuItem) {
@@ -137,9 +177,10 @@ public class FabOptions extends FrameLayout implements View.OnClickListener, Tra
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+        Log.d(TAG, "onLayout: hit");
         if(mIsOpen) {
             ViewGroup.LayoutParams backgroundLayoutParams = mBackground.getLayoutParams();
-            backgroundLayoutParams.width = mButtonContainer.getMeasuredWidth() + mFloatingActionButton.getMeasuredWidth();
+            backgroundLayoutParams.width = mButtonContainer.getMeasuredWidth();
             backgroundLayoutParams.height = mButtonContainer.getMeasuredHeight();
             mBackground.setLayoutParams(backgroundLayoutParams);
         }

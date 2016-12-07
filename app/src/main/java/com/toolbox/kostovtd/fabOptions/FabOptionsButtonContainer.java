@@ -6,7 +6,6 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.toolbox.kostovtd.R;
 
@@ -16,10 +15,14 @@ import com.toolbox.kostovtd.R;
 
 public class FabOptionsButtonContainer extends LinearLayout {
 
+    private static final int OPTION_BUTTON_MARGIN = 35;  // holds the margin which needs to be included between
+                                                    // each option button in the left and in the right section
+
     private int numberOfOptionButtons;
     private int currentButtonIndex;
     private boolean isMarginSet = false;
-    private int margin = 0;
+    private int sectionMargin = 0; // holds the margin which needs to be included between the
+                                    // left and the right sections of the FabOptionsButton
 
     public FabOptionsButtonContainer(Context context) {
         this(context, null);
@@ -60,8 +63,10 @@ public class FabOptionsButtonContainer extends LinearLayout {
         currentButtonIndex++;
 
         if(!isMarginSet && currentButtonIndex > numberOfOptionButtons / 2) {
-            params.setMargins(300, 0, 0, 0);
+            params.setMargins(sectionMargin, 0, 0, 0);
             isMarginSet = true;
+        } else if(getChildCount() > 0){
+            params.setMargins(OPTION_BUTTON_MARGIN, 0, 0, 0);
         }
 
         fabOptionsButton.setLayoutParams(params);
@@ -75,7 +80,9 @@ public class FabOptionsButtonContainer extends LinearLayout {
         return fabOptionsButton;
     }
 
-    public void setMargin(int margin) {
-        this.margin = margin;
+    public void setSectionMargin(int sectionMargin) {
+        // add some additional margin, because otherwise some option buttons
+        // will be too close to the fab button
+        this.sectionMargin = sectionMargin + (OPTION_BUTTON_MARGIN * 2);
     }
 }
