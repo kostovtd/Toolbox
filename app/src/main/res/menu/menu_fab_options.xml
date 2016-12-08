@@ -10,23 +10,10 @@
         android:icon="@drawable/ic_textsms_white"
         android:title="Message" />
 
-
-    <item
-        android:id="@+id/faboptions_textsms1"
-        android:icon="@drawable/ic_textsms_white"
-        android:title="Message" />
-
-
-    <item
-        android:id="@+id/faboptions_textsms3"
-        android:icon="@drawable/ic_textsms_white"
-        android:title="Message" />
-
     <item
         android:id="@+id/faboptions_download"
         android:icon="@drawable/ic_file_download_white"
         android:title="Download" />
-
 
     <item
         android:id="@+id/faboptions_share"

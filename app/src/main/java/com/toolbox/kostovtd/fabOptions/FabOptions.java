@@ -85,13 +85,23 @@ public class FabOptions extends FrameLayout implements View.OnClickListener, Tra
         SupportMenuInflater menuInflater = new SupportMenuInflater(context);
         menuInflater.inflate(menuId, menu);
 
-        addButtonsFromMenu(context, menu);
+        try {
+            addButtonsFromMenu(context, menu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         close();
     }
 
 
-    private void addButtonsFromMenu(Context context, Menu menu) {
+    private void addButtonsFromMenu(Context context, Menu menu) throws Exception {
         Log.d(TAG, "addButtonsFromMenu: hit");
+        // restrict the maximum number of elements in the menu
+        // because of usability issues
+        if(menu.size() > 8) {
+            throw new Exception("The number of menu items is greater than 8");
+        }
         mButtonContainer.setNumberOfOptionButtons(menu.size());
         mButtonContainer.setSectionMargin(getViewWidthBeforeDisplayed(context, mFloatingActionButton));
         for(int i=0; i < menu.size(); i++) {

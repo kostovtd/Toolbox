@@ -83,6 +83,14 @@ public class FabOptionsButtonContainer extends LinearLayout {
     public void setSectionMargin(int sectionMargin) {
         // add some additional margin, because otherwise some option buttons
         // will be too close to the fab button
-        this.sectionMargin = sectionMargin + (OPTION_BUTTON_MARGIN * 2);
+        boolean isEvenNumberOfButtons = numberOfOptionButtons % 2 == 0;
+        // need different margins for odd and even number of menu element,
+        // otherwise UI bugs appear
+        if(isEvenNumberOfButtons) {
+            this.sectionMargin = sectionMargin + (OPTION_BUTTON_MARGIN * 2);
+        } else {
+            this.sectionMargin = sectionMargin + (OPTION_BUTTON_MARGIN * 5);
+        }
+
     }
 }
