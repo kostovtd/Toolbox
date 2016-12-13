@@ -2,8 +2,17 @@ package com.toolbox.kostovtd;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
+import android.transition.ChangeTransform;
+import android.transition.TransitionManager;
+import android.transition.TransitionSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -16,6 +25,11 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    private boolean isResized = false;
+
+    @BindView(R.id.root_container)
+    LinearLayout root_container;
 
     @BindView(R.id.main_container)
     LinearLayout mainContainer;
@@ -35,8 +49,36 @@ public class MainActivity extends AppCompatActivity {
         bTestScaleXY.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainContainer.setScaleX(0.5f);
-                mainContainer.setScaleY(0.5f);
+//                TransitionManager.beginDelayedTransition(root_container, new CloseMorphTransition(mainContainer));
+
+                if(isResized) {
+                    AnimationSet animationSet = new AnimationSet(true);
+                    animationSet.setFillAfter(true);
+                    animationSet.setDuration(700);
+
+                    ScaleAnimation scaleDownAnimation =  new ScaleAnimation(0.7f, 1f, 0.7f, 1f, Animation.RELATIVE_TO_PARENT, 0.5f, Animation.RELATIVE_TO_PARENT, 0.5f);
+                    animationSet.addAnimation(scaleDownAnimation);
+
+                    TranslateAnimation rightTranslationAnimation = new TranslateAnimation(600, 0, 0, 0);
+                    animationSet.addAnimation(rightTranslationAnimation);
+
+                    mainContainer.startAnimation(animationSet);
+                    isResized = false;
+                } else {
+                    AnimationSet animationSet = new AnimationSet(true);
+                    animationSet.setFillAfter(true);
+                    animationSet.setDuration(700);
+
+                    ScaleAnimation scaleDownAnimation =  new ScaleAnimation(1f, 0.7f, 1f, 0.7f, Animation.RELATIVE_TO_PARENT, 0.5f, Animation.RELATIVE_TO_PARENT, 0.5f);
+                    animationSet.addAnimation(scaleDownAnimation);
+
+                    TranslateAnimation rightTranslationAnimation = new TranslateAnimation(0, 600, 0, 0);
+                    animationSet.addAnimation(rightTranslationAnimation);
+
+                    mainContainer.startAnimation(animationSet);
+                    isResized = true;
+                }
+
             }
         });
 
@@ -61,5 +103,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         Log.d(TAG, "onDestroy: hit");
         super.onDestroy();
+    }
+
+    private static class CloseMorphTransition extends TransitionSet {
+        CloseMorphTransition(ViewGroup viewGroup) {
+            ChangeBounds changeBounds = new ChangeBounds();
+
+            ChangeTransform changeTransform = new ChangeTransform();
+            for (int i = 0; i < viewGroup.getChildCount(); i++){
+                changeTransform.addTarget(viewGroup.getChildAt(i));
+            }
+
+            addTransition(changeTransform);
+            addTransition(changeBounds);
+            setOrdering(TransitionSet.ORDERING_TOGETHER);
+        }
     }
 }
