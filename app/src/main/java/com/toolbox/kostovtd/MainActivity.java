@@ -1,7 +1,10 @@
 package com.toolbox.kostovtd;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.transition.ChangeBounds;
 import android.transition.ChangeTransform;
 import android.transition.TransitionManager;
@@ -28,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isResized = false;
 
-    @BindView(R.id.root_container)
-    LinearLayout root_container;
+    @BindView(R.id.nav_bar)
+    Toolbar toolbar;
 
     @BindView(R.id.main_container)
     LinearLayout mainContainer;
@@ -45,37 +48,16 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        setUpToolbar();
 
         bTestScaleXY.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                TransitionManager.beginDelayedTransition(root_container, new CloseMorphTransition(mainContainer));
-
                 if(isResized) {
-                    AnimationSet animationSet = new AnimationSet(true);
-                    animationSet.setFillAfter(true);
-                    animationSet.setDuration(700);
-
-                    ScaleAnimation scaleDownAnimation =  new ScaleAnimation(0.7f, 1f, 0.7f, 1f, Animation.RELATIVE_TO_PARENT, 0.5f, Animation.RELATIVE_TO_PARENT, 0.5f);
-                    animationSet.addAnimation(scaleDownAnimation);
-
-                    TranslateAnimation rightTranslationAnimation = new TranslateAnimation(600, 0, 0, 0);
-                    animationSet.addAnimation(rightTranslationAnimation);
-
-                    mainContainer.startAnimation(animationSet);
+                    scaleUpAndTranslateView(mainContainer);
                     isResized = false;
                 } else {
-                    AnimationSet animationSet = new AnimationSet(true);
-                    animationSet.setFillAfter(true);
-                    animationSet.setDuration(700);
-
-                    ScaleAnimation scaleDownAnimation =  new ScaleAnimation(1f, 0.7f, 1f, 0.7f, Animation.RELATIVE_TO_PARENT, 0.5f, Animation.RELATIVE_TO_PARENT, 0.5f);
-                    animationSet.addAnimation(scaleDownAnimation);
-
-                    TranslateAnimation rightTranslationAnimation = new TranslateAnimation(0, 600, 0, 0);
-                    animationSet.addAnimation(rightTranslationAnimation);
-
-                    mainContainer.startAnimation(animationSet);
+                    scaleDownAndTranslateView(mainContainer);
                     isResized = true;
                 }
 
@@ -105,18 +87,42 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private static class CloseMorphTransition extends TransitionSet {
-        CloseMorphTransition(ViewGroup viewGroup) {
-            ChangeBounds changeBounds = new ChangeBounds();
 
-            ChangeTransform changeTransform = new ChangeTransform();
-            for (int i = 0; i < viewGroup.getChildCount(); i++){
-                changeTransform.addTarget(viewGroup.getChildAt(i));
-            }
+    /**
+     * Set up the {@link Toolbar) the current screen
+     */
+    private void setUpToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.nav_bar);
+        setSupportActionBar(toolbar);
+    }
 
-            addTransition(changeTransform);
-            addTransition(changeBounds);
-            setOrdering(TransitionSet.ORDERING_TOGETHER);
-        }
+    private void scaleDownAndTranslateView(View view) {
+        ObjectAnimator scaleDownXAnimator = ObjectAnimator.ofFloat(view, "scaleX", 1f, 0.8f);
+        scaleDownXAnimator.setDuration(500);
+        ObjectAnimator scaleDownYAnimator = ObjectAnimator.ofFloat(view, "scaleY", 1f, 0.8f);
+        scaleDownYAnimator.setDuration(500);
+        ObjectAnimator translateXAnimator = ObjectAnimator.ofFloat(view, "translationX", 600);
+        translateXAnimator.setDuration(500);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(scaleDownXAnimator)
+                .with(scaleDownYAnimator)
+                .with(translateXAnimator);
+        animatorSet.start();
+    }
+
+    private void scaleUpAndTranslateView(View view) {
+        ObjectAnimator scaleDownXAnimator = ObjectAnimator.ofFloat(view, "scaleX", 0.8f, 1f);
+        scaleDownXAnimator.setDuration(500);
+        ObjectAnimator scaleDownYAnimator = ObjectAnimator.ofFloat(view, "scaleY", 0.8f, 1f);
+        scaleDownYAnimator.setDuration(500);
+        ObjectAnimator translateXAnimator = ObjectAnimator.ofFloat(view, "translationX", 0);
+        translateXAnimator.setDuration(500);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(scaleDownXAnimator)
+                .with(scaleDownYAnimator)
+                .with(translateXAnimator);
+        animatorSet.start();
     }
 }
