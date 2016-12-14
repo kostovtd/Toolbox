@@ -3,26 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_red_light"
+    android:id="@+id/main_container">
 
+    <include
+        android:id="@+id/nav_bar_container"
+        layout="@layout/app_bar" />
 
-    <LinearLayout
-        android:id="@+id/main_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@android:color/holo_red_light">
-
-        <include
-            android:id="@+id/nav_bar_container"
-            layout="@layout/app_bar" />
-
-        <Button
-            android:id="@+id/button_test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TEST SCALE X Y"/>
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/button_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TEST SCALE X Y"/>
 
 </LinearLayout>

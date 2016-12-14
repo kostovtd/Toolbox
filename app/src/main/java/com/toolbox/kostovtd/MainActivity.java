@@ -2,6 +2,10 @@ package com.toolbox.kostovtd;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +14,7 @@ import android.transition.ChangeTransform;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -45,27 +50,12 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: hit");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("");
 
         ButterKnife.bind(this);
 
         setUpToolbar();
-
-        bTestScaleXY.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(isResized) {
-                    scaleUpAndTranslateView(mainContainer);
-                    isResized = false;
-                } else {
-                    scaleDownAndTranslateView(mainContainer);
-                    isResized = true;
-                }
-
-            }
-        });
-
     }
-
 
     @Override
     protected void onResume() {
@@ -87,15 +77,37 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-
     /**
      * Set up the {@link Toolbar) the current screen
      */
     private void setUpToolbar() {
         toolbar = (Toolbar) findViewById(R.id.nav_bar);
+
+        // set to be the same as the hamburger menu used for navigation drawer
+        toolbar.setLogo(R.drawable.ic_menu_white);
+
+        // need to set a click listener for the logo
+        // in this particular case, the logo view is the
+        // first (0) child of the Toolbar object
+        toolbar.getChildAt(0).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // handle the scaling and translating
+                // animations logic
+                if(isResized) {
+                    scaleUpAndTranslateView(mainContainer);
+                    isResized = false;
+                } else {
+                    scaleDownAndTranslateView(mainContainer);
+                    isResized = true;
+                }
+            }
+        });
         setSupportActionBar(toolbar);
     }
 
+
+    //TODO NEED REFACTORING (TRY TO SEPARATE INTO SMALLER FUNCTIONS)
     private void scaleDownAndTranslateView(View view) {
         ObjectAnimator scaleDownXAnimator = ObjectAnimator.ofFloat(view, "scaleX", 1f, 0.8f);
         scaleDownXAnimator.setDuration(500);
@@ -111,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         animatorSet.start();
     }
 
+    //TODO NEED REFACTORING (TRY TO SEPARATE INTO SMALLER FUNCTIONS)
     private void scaleUpAndTranslateView(View view) {
         ObjectAnimator scaleDownXAnimator = ObjectAnimator.ofFloat(view, "scaleX", 0.8f, 1f);
         scaleDownXAnimator.setDuration(500);
