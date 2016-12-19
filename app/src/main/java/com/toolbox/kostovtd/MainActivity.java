@@ -45,6 +45,15 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.button_test)
     Button bTestScaleXY;
 
+    @BindView(R.id.button_fade_in)
+    Button bFadeIn;
+
+    @BindView(R.id.button_fade_out)
+    Button bFadeOut;
+
+    @BindView(R.id.view_test)
+    View viewTest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: hit");
@@ -55,6 +64,20 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setUpToolbar();
+
+        bFadeIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fadeInView(viewTest);
+            }
+        });
+
+        bFadeOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fadeOutView(viewTest);
+            }
+        });
     }
 
     @Override
@@ -137,5 +160,19 @@ public class MainActivity extends AppCompatActivity {
                 .with(scaleDownYAnimator)
                 .with(translateXAnimator);
         animatorSet.start();
+    }
+
+
+    private void fadeInView(View view) {
+        ObjectAnimator fadeInAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 0, 1);
+        fadeInAnimator.setDuration(500);
+        fadeInAnimator.start();
+    }
+
+
+    private void fadeOutView(View view) {
+        ObjectAnimator fadeInAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 1, 0);
+        fadeInAnimator.setDuration(500);
+        fadeInAnimator.start();
     }
 }

@@ -17,4 +17,24 @@
         android:layout_height="wrap_content"
         android:text="TEST SCALE X Y"/>
 
+    <Button
+        android:id="@+id/button_fade_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TEST FADE IN" />
+
+
+    <Button
+        android:id="@+id/button_fade_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TEST FADE OUT" />
+
+    <View
+        android:id="@+id/view_test"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:alpha="0"
+        android:background="@android:color/darker_gray"/>
 </LinearLayout>
