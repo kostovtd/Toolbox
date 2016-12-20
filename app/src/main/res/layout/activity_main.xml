@@ -8,24 +8,41 @@
         android:orientation="vertical"
         android:layout_width="200dp"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        android:gravity="center_vertical">
+        android:background="@android:color/white"
+        android:gravity="bottom|center_horizontal">
 
-        <View
-            android:id="@+id/view_green"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:alpha="0"
-            android:background="@android:color/holo_green_dark"/>
+            android:id="@+id/header_container">
 
-        <View
-            android:id="@+id/view_white"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:alpha="0"
-            android:background="@android:color/white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="John Doe"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/textColorDark"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="johndoe@email.com"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/textColorLight"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/round_dark_shape"
+                android:text="App Code : 1904"
+                android:textColor="@android:color/white"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

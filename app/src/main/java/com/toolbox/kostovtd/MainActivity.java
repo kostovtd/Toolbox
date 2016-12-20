@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import butterknife.BindView;
@@ -28,11 +27,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_container)
     LinearLayout mainContainer;
 
-    @BindView(R.id.view_green)
-    View viewGreen;
+    @BindView(R.id.header_container)
+    LinearLayout headerContainer;
 
-    @BindView(R.id.view_white)
-    View viewWhite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,13 +82,11 @@ public class MainActivity extends AppCompatActivity {
                 // animations logic
                 if(isResized) {
                     scaleUpAndTranslateView(mainContainer);
-                    fadeOutAndTranslateYView(viewWhite, 200, false);
-                    fadeOutAndTranslateYView(viewGreen, 200, true);
+                    fadeOutAndTranslateYView(headerContainer, 1700, false);
                     isResized = false;
                 } else {
                     scaleDownAndTranslateView(mainContainer);
-                    fadeInAndTranslateYView(viewGreen, -200, false);
-                    fadeInAndTranslateYView(viewWhite, -200, true);
+                    fadeInAndTranslateYView(headerContainer, -1700, false);
                     isResized = true;
                 }
             }
@@ -135,9 +130,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void fadeInAndTranslateYView(View view, float translationY, boolean hasDelay) {
         ObjectAnimator fadeInAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 0, 1);
-        fadeInAnimator.setDuration(700);
+        fadeInAnimator.setDuration(1500);
         ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, translationY);
-        translateYAnimator.setDuration(700);
+        translateYAnimator.setDuration(1500);
 
         AnimatorSet animatorSet = new AnimatorSet();
 
@@ -154,18 +149,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void fadeOutAndTranslateYView(View view, float translationY, boolean hasDelay) {
-        ObjectAnimator fadeInAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 1, 0);
-        fadeInAnimator.setDuration(700);
+        ObjectAnimator fadeOutAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 1, 0);
+        fadeOutAnimator.setDuration(1500);
         ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, translationY);
-        translateYAnimator.setDuration(700);
+        translateYAnimator.setDuration(1500);
 
         AnimatorSet animatorSet = new AnimatorSet();
 
         if(hasDelay) {
-            animatorSet.play(fadeInAnimator).after(100)
+            animatorSet.play(fadeOutAnimator).after(100)
                     .with(translateYAnimator);
         } else {
-            animatorSet.play(fadeInAnimator)
+            animatorSet.play(fadeOutAnimator)
                     .with(translateYAnimator);
         }
 
