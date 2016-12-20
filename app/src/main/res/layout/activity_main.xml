@@ -1,40 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/holo_red_light"
-    android:id="@+id/main_container">
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/nav_bar_container"
-        layout="@layout/app_bar" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical">
 
-    <Button
-        android:id="@+id/button_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TEST SCALE X Y"/>
+        <View
+            android:id="@+id/view_green"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:alpha="0"
+            android:background="@android:color/holo_green_dark"/>
 
-    <Button
-        android:id="@+id/button_fade_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TEST FADE IN" />
+        <View
+            android:id="@+id/view_white"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:alpha="0"
+            android:background="@android:color/white"/>
 
 
-    <Button
-        android:id="@+id/button_fade_out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TEST FADE OUT" />
+    </LinearLayout>
 
-    <View
-        android:id="@+id/view_test"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:alpha="0"
-        android:background="@android:color/darker_gray"/>
-</LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_red_light"
+        android:id="@+id/main_container">
+
+        <include
+            android:id="@+id/nav_bar_container"
+            layout="@layout/app_bar" />
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

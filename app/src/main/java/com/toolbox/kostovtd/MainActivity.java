@@ -2,25 +2,11 @@ package com.toolbox.kostovtd;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.transition.ChangeBounds;
-import android.transition.ChangeTransform;
-import android.transition.TransitionManager;
-import android.transition.TransitionSet;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -42,17 +28,11 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.main_container)
     LinearLayout mainContainer;
 
-    @BindView(R.id.button_test)
-    Button bTestScaleXY;
+    @BindView(R.id.view_green)
+    View viewGreen;
 
-    @BindView(R.id.button_fade_in)
-    Button bFadeIn;
-
-    @BindView(R.id.button_fade_out)
-    Button bFadeOut;
-
-    @BindView(R.id.view_test)
-    View viewTest;
+    @BindView(R.id.view_white)
+    View viewWhite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,20 +44,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setUpToolbar();
-
-        bFadeIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fadeInView(viewTest);
-            }
-        });
-
-        bFadeOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fadeOutView(viewTest);
-            }
-        });
     }
 
     @Override
@@ -119,9 +85,13 @@ public class MainActivity extends AppCompatActivity {
                 // animations logic
                 if(isResized) {
                     scaleUpAndTranslateView(mainContainer);
+                    fadeOutAndTranslateYView(viewWhite, 200, false);
+                    fadeOutAndTranslateYView(viewGreen, 200, true);
                     isResized = false;
                 } else {
                     scaleDownAndTranslateView(mainContainer);
+                    fadeInAndTranslateYView(viewGreen, -200, false);
+                    fadeInAndTranslateYView(viewWhite, -200, true);
                     isResized = true;
                 }
             }
@@ -132,12 +102,12 @@ public class MainActivity extends AppCompatActivity {
 
     //TODO NEED REFACTORING (TRY TO SEPARATE INTO SMALLER FUNCTIONS)
     private void scaleDownAndTranslateView(View view) {
-        ObjectAnimator scaleDownXAnimator = ObjectAnimator.ofFloat(view, "scaleX", 1f, 0.8f);
+        ObjectAnimator scaleDownXAnimator = ObjectAnimator.ofFloat(view, View.SCALE_X, 1f, 0.8f);
         scaleDownXAnimator.setDuration(500);
-        ObjectAnimator scaleDownYAnimator = ObjectAnimator.ofFloat(view, "scaleY", 1f, 0.8f);
+        ObjectAnimator scaleDownYAnimator = ObjectAnimator.ofFloat(view, View.SCALE_Y, 1f, 0.8f);
         scaleDownYAnimator.setDuration(500);
-        ObjectAnimator translateXAnimator = ObjectAnimator.ofFloat(view, "translationX", 600);
-        translateXAnimator.setDuration(500);
+        ObjectAnimator translateXAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_X, 600);
+        translateXAnimator.setDuration(700);
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(scaleDownXAnimator)
@@ -148,12 +118,12 @@ public class MainActivity extends AppCompatActivity {
 
     //TODO NEED REFACTORING (TRY TO SEPARATE INTO SMALLER FUNCTIONS)
     private void scaleUpAndTranslateView(View view) {
-        ObjectAnimator scaleDownXAnimator = ObjectAnimator.ofFloat(view, "scaleX", 0.8f, 1f);
+        ObjectAnimator scaleDownXAnimator = ObjectAnimator.ofFloat(view, View.SCALE_X, 0.8f, 1f);
         scaleDownXAnimator.setDuration(500);
-        ObjectAnimator scaleDownYAnimator = ObjectAnimator.ofFloat(view, "scaleY", 0.8f, 1f);
+        ObjectAnimator scaleDownYAnimator = ObjectAnimator.ofFloat(view, View.SCALE_Y, 0.8f, 1f);
         scaleDownYAnimator.setDuration(500);
-        ObjectAnimator translateXAnimator = ObjectAnimator.ofFloat(view, "translationX", 0);
-        translateXAnimator.setDuration(500);
+        ObjectAnimator translateXAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_X, 0);
+        translateXAnimator.setDuration(700);
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(scaleDownXAnimator)
@@ -163,16 +133,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void fadeInView(View view) {
+    private void fadeInAndTranslateYView(View view, float translationY, boolean hasDelay) {
         ObjectAnimator fadeInAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 0, 1);
-        fadeInAnimator.setDuration(500);
-        fadeInAnimator.start();
+        fadeInAnimator.setDuration(700);
+        ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, translationY);
+        translateYAnimator.setDuration(700);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+
+        if(hasDelay) {
+            animatorSet.play(fadeInAnimator).after(100)
+                    .with(translateYAnimator);
+        } else {
+            animatorSet.play(fadeInAnimator)
+                    .with(translateYAnimator);
+        }
+
+        animatorSet.start();
     }
 
 
-    private void fadeOutView(View view) {
+    private void fadeOutAndTranslateYView(View view, float translationY, boolean hasDelay) {
         ObjectAnimator fadeInAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 1, 0);
-        fadeInAnimator.setDuration(500);
-        fadeInAnimator.start();
+        fadeInAnimator.setDuration(700);
+        ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, translationY);
+        translateYAnimator.setDuration(700);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+
+        if(hasDelay) {
+            animatorSet.play(fadeInAnimator).after(100)
+                    .with(translateYAnimator);
+        } else {
+            animatorSet.play(fadeInAnimator)
+                    .with(translateYAnimator);
+        }
+
+        animatorSet.start();
     }
 }
