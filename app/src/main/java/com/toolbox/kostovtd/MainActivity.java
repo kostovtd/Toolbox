@@ -82,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
                 // animations logic
                 if(isResized) {
                     scaleUpAndTranslateView(mainContainer);
-                    fadeOutAndTranslateYView(headerContainer, 1700, false);
+                    fadeOutAndTranslateYView(headerContainer, 200, false);
                     isResized = false;
                 } else {
                     scaleDownAndTranslateView(mainContainer);
-                    fadeInAndTranslateYView(headerContainer, -1700, false);
+                    fadeInAndTranslateYView(headerContainer, -200, false);
                     isResized = true;
                 }
             }
@@ -130,9 +130,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void fadeInAndTranslateYView(View view, float translationY, boolean hasDelay) {
         ObjectAnimator fadeInAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 0, 1);
-        fadeInAnimator.setDuration(1500);
+        fadeInAnimator.setDuration(800);
         ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, translationY);
-        translateYAnimator.setDuration(1500);
+        translateYAnimator.setDuration(800);
 
         AnimatorSet animatorSet = new AnimatorSet();
 
@@ -150,9 +150,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void fadeOutAndTranslateYView(View view, float translationY, boolean hasDelay) {
         ObjectAnimator fadeOutAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 1, 0);
-        fadeOutAnimator.setDuration(1500);
+        fadeOutAnimator.setDuration(800);
         ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, translationY);
-        translateYAnimator.setDuration(1500);
+        translateYAnimator.setDuration(800);
 
         AnimatorSet animatorSet = new AnimatorSet();
 
