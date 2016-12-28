@@ -1,13 +1,19 @@
 package com.toolbox.kostovtd;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Property;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +35,15 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.header_container)
     LinearLayout headerContainer;
+
+    @BindView(R.id.text_contacts)
+    TextView textContacts;
+
+    @BindView(R.id.text_partners)
+    TextView textPartners;
+
+    @BindView(R.id.text_settings)
+    TextView textSettings;
 
 
     @Override
@@ -83,15 +98,60 @@ public class MainActivity extends AppCompatActivity {
                 if(isResized) {
                     scaleUpAndTranslateView(mainContainer);
                     fadeOutAndTranslateYView(headerContainer, 200, false);
+                    fadeOutAndTranslateYView(textContacts, 200, false);
+                    fadeOutAndTranslateYView(textPartners, 200, false);
+                    fadeOutAndTranslateYView(textSettings, 200, false);
                     isResized = false;
                 } else {
-                    scaleDownAndTranslateView(mainContainer);
-                    fadeInAndTranslateYView(headerContainer, -200, false);
+//                    scaleDownAndTranslateView(mainContainer);
+//                    fadeInAndTranslateYView(headerContainer, -200, false).start();
+//
+//                    AnimatorSet animatorSet = new AnimatorSet();
+//                    List<Animator> animatorList = new ArrayList<>();
+//                    animatorList.add(fadeInAndTranslateYView(textContacts, -200, false));
+//                    animatorList.add(fadeInAndTranslateYView(textPartners, -200, false));
+//                    animatorList.add(fadeInAndTranslateYView(textSettings, -200, false));
+//                    animatorSet.playSequentially(animatorList);
+//                    animatorSet.start();
                     isResized = true;
                 }
             }
         });
         setSupportActionBar(toolbar);
+    }
+
+
+
+//    private ObjectAnimator constructAnimator(View view, Property<View, Float> property,
+//                                             float withValue, long animationDuration) {
+//        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, property, withValue);
+//        objectAnimator.setDuration(animationDuration);
+//        return objectAnimator;
+//    }
+//
+//
+//    private ObjectAnimator constructAnimator(View view, Property<View, Float> property,
+//                                             float fromValue, float toValue, long animationDuration) {
+//        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, property, fromValue, toValue);
+//        objectAnimator.setDuration(animationDuration);
+//        return objectAnimator;
+//    }
+
+    
+
+    private List<Animator> scaleXYAnimation(View view, float fromValue, float toValue, long animationDuration) {
+        List<Animator> animatorList = new ArrayList<>();
+
+        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, View.SCALE_X, fromValue, toValue);
+        scaleXAnimator.setDuration(animationDuration);
+
+        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, View.SCALE_Y, fromValue, toValue);
+        scaleYAnimator.setDuration(animationDuration);
+
+        animatorList.add(scaleXAnimator);
+        animatorList.add(scaleYAnimator);
+
+        return animatorList;
     }
 
 
@@ -128,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void fadeInAndTranslateYView(View view, float translationY, boolean hasDelay) {
+    private AnimatorSet fadeInAndTranslateYView(View view, float translationY, boolean hasDelay) {
         ObjectAnimator fadeInAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 0, 1);
         fadeInAnimator.setDuration(800);
         ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, translationY);
@@ -137,18 +197,18 @@ public class MainActivity extends AppCompatActivity {
         AnimatorSet animatorSet = new AnimatorSet();
 
         if(hasDelay) {
-            animatorSet.play(fadeInAnimator).after(100)
+            animatorSet.play(fadeInAnimator).after(200)
                     .with(translateYAnimator);
         } else {
             animatorSet.play(fadeInAnimator)
                     .with(translateYAnimator);
         }
 
-        animatorSet.start();
+        return animatorSet;
     }
 
 
-    private void fadeOutAndTranslateYView(View view, float translationY, boolean hasDelay) {
+    private AnimatorSet fadeOutAndTranslateYView(View view, float translationY, boolean hasDelay) {
         ObjectAnimator fadeOutAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 1, 0);
         fadeOutAnimator.setDuration(800);
         ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, translationY);
@@ -157,13 +217,13 @@ public class MainActivity extends AppCompatActivity {
         AnimatorSet animatorSet = new AnimatorSet();
 
         if(hasDelay) {
-            animatorSet.play(fadeOutAnimator).after(100)
+            animatorSet.play(fadeOutAnimator).after(200)
                     .with(translateYAnimator);
         } else {
             animatorSet.play(fadeOutAnimator)
                     .with(translateYAnimator);
         }
 
-        animatorSet.start();
+        return animatorSet;
     }
 }
