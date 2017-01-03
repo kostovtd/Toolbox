@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.Property;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -96,23 +95,40 @@ public class MainActivity extends AppCompatActivity {
                 // handle the scaling and translating
                 // animations logic
                 if(isResized) {
-                    scaleUpAndTranslateView(mainContainer);
-                    fadeOutAndTranslateYView(headerContainer, 200, false);
-                    fadeOutAndTranslateYView(textContacts, 200, false);
-                    fadeOutAndTranslateYView(textPartners, 200, false);
-                    fadeOutAndTranslateYView(textSettings, 200, false);
+//                    scaleUpAndTranslateView(mainContainer);
+//                    fadeOutAndTranslateYView(headerContainer, 200, false);
+//                    fadeOutAndTranslateYView(textContacts, 200, false);
+//                    fadeOutAndTranslateYView(textPartners, 200, false);
+//                    fadeOutAndTranslateYView(textSettings, 200, false);
                     isResized = false;
                 } else {
-//                    scaleDownAndTranslateView(mainContainer);
-//                    fadeInAndTranslateYView(headerContainer, -200, false).start();
-//
-//                    AnimatorSet animatorSet = new AnimatorSet();
-//                    List<Animator> animatorList = new ArrayList<>();
-//                    animatorList.add(fadeInAndTranslateYView(textContacts, -200, false));
-//                    animatorList.add(fadeInAndTranslateYView(textPartners, -200, false));
-//                    animatorList.add(fadeInAndTranslateYView(textSettings, -200, false));
-//                    animatorSet.playSequentially(animatorList);
-//                    animatorSet.start();
+                    // scale down and translate main view
+                    AnimatorSet animatorSet = new AnimatorSet();
+                    List<Animator> scaleDownAndTranslateAnimatorList = new ArrayList<>();
+                    scaleDownAndTranslateAnimatorList.addAll(scaleXYAnimation(mainContainer, 1f, 0.8f, 500, 0));
+                    scaleDownAndTranslateAnimatorList.add(translateXAnimation(mainContainer, 600, 500, 0));
+                    animatorSet.playTogether(scaleDownAndTranslateAnimatorList);
+                    animatorSet.start();
+
+
+                    // fade in and translate side menu
+                    AnimatorSet animatorSetSideMenu = new AnimatorSet();
+                    List<Animator> animatorList = new ArrayList<>();
+//                    animatorList.add(fadeAnimation(textContacts, 0, 1, 800, 200));
+//                    animatorList.add(translateYAnimation(textContacts, -200, 800, 0));
+//                    animatorList.add(fadeAnimation(textPartners, 0, 1, 800, 200));
+//                    animatorList.add(translateYAnimation(textPartners, -200, 800, 0));
+//                    animatorList.add(fadeAnimation(textSettings, 0, 1, 800, 200));
+//                    animatorList.add(translateYAnimation(textSettings, -200, 800, 0));
+
+                    animatorSetSideMenu.play(fadeAnimation(textContacts, 0, 1, 800, 0)).after(500)
+                            .with(translateYAnimation(textContacts, -200, 800, 0)).after(500)
+                            .with(fadeAnimation(textPartners, 0, 1, 800, 0)).after(500)
+                            .with(translateYAnimation(textPartners, -200, 800, 0)).after(500)
+                            .with(fadeAnimation(textSettings, 0, 1, 800, 0)).after(500)
+                            .with(translateYAnimation(textSettings, -200, 800, 0)).after(500);
+
+                    animatorSetSideMenu.start();
                     isResized = true;
                 }
             }
@@ -121,32 +137,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-//    private ObjectAnimator constructAnimator(View view, Property<View, Float> property,
-//                                             float withValue, long animationDuration) {
-//        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, property, withValue);
-//        objectAnimator.setDuration(animationDuration);
-//        return objectAnimator;
-//    }
-//
-//
-//    private ObjectAnimator constructAnimator(View view, Property<View, Float> property,
-//                                             float fromValue, float toValue, long animationDuration) {
-//        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, property, fromValue, toValue);
-//        objectAnimator.setDuration(animationDuration);
-//        return objectAnimator;
-//    }
-
-    
-
-    private List<Animator> scaleXYAnimation(View view, float fromValue, float toValue, long animationDuration) {
+    private List<Animator> scaleXYAnimation(View view, float fromValue, float toValue, long animationDuration,
+                                            long startDelay) {
         List<Animator> animatorList = new ArrayList<>();
 
         ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, View.SCALE_X, fromValue, toValue);
-        scaleXAnimator.setDuration(animationDuration);
+        scaleXAnimator.setDuration(animationDuration).setStartDelay(startDelay);
 
         ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, View.SCALE_Y, fromValue, toValue);
-        scaleYAnimator.setDuration(animationDuration);
+        scaleYAnimator.setDuration(animationDuration).setStartDelay(startDelay);
 
         animatorList.add(scaleXAnimator);
         animatorList.add(scaleYAnimator);
@@ -155,75 +154,64 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //TODO NEED REFACTORING (TRY TO SEPARATE INTO SMALLER FUNCTIONS)
-    private void scaleDownAndTranslateView(View view) {
-        ObjectAnimator scaleDownXAnimator = ObjectAnimator.ofFloat(view, View.SCALE_X, 1f, 0.8f);
-        scaleDownXAnimator.setDuration(500);
-        ObjectAnimator scaleDownYAnimator = ObjectAnimator.ofFloat(view, View.SCALE_Y, 1f, 0.8f);
-        scaleDownYAnimator.setDuration(500);
-        ObjectAnimator translateXAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_X, 600);
-        translateXAnimator.setDuration(700);
+    private Animator scaleXAnimation(View view, float fromValue, float toValue, long animationDuration,
+                                     long startDelay) {
+        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, View.SCALE_X, fromValue, toValue);
+        scaleXAnimator.setDuration(animationDuration).setStartDelay(startDelay);
 
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.play(scaleDownXAnimator)
-                .with(scaleDownYAnimator)
-                .with(translateXAnimator);
-        animatorSet.start();
-    }
-
-    //TODO NEED REFACTORING (TRY TO SEPARATE INTO SMALLER FUNCTIONS)
-    private void scaleUpAndTranslateView(View view) {
-        ObjectAnimator scaleDownXAnimator = ObjectAnimator.ofFloat(view, View.SCALE_X, 0.8f, 1f);
-        scaleDownXAnimator.setDuration(500);
-        ObjectAnimator scaleDownYAnimator = ObjectAnimator.ofFloat(view, View.SCALE_Y, 0.8f, 1f);
-        scaleDownYAnimator.setDuration(500);
-        ObjectAnimator translateXAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_X, 0);
-        translateXAnimator.setDuration(700);
-
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.play(scaleDownXAnimator)
-                .with(scaleDownYAnimator)
-                .with(translateXAnimator);
-        animatorSet.start();
+        return scaleXAnimator;
     }
 
 
-    private AnimatorSet fadeInAndTranslateYView(View view, float translationY, boolean hasDelay) {
-        ObjectAnimator fadeInAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 0, 1);
-        fadeInAnimator.setDuration(800);
-        ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, translationY);
-        translateYAnimator.setDuration(800);
+    private Animator scaleYAnimation(View view, float fromValue, float toValue, long animationDuration,
+                                     long startDelay) {
+        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, View.SCALE_Y, fromValue, toValue);
+        scaleYAnimator.setDuration(animationDuration).setStartDelay(startDelay);
 
-        AnimatorSet animatorSet = new AnimatorSet();
+        return scaleYAnimator;
+    }
+    
+    
+    private List<Animator> translateXYAnimation(View view, float withValue, long animationDuration,
+                                                long startDelay) {
+        List<Animator> animatorList = new ArrayList<>();
+        
+        ObjectAnimator translateXAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_X, withValue);
+        translateXAnimator.setDuration(animationDuration).setStartDelay(startDelay);
+        
+        ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, withValue);
+        translateYAnimator.setDuration(animationDuration).setStartDelay(startDelay);
+        
+        animatorList.add(translateXAnimator);
+        animatorList.add(translateYAnimator);
+        
+        return animatorList;
+    }
+    
+    
+    private Animator translateXAnimation(View view, float withValue, long animationDuration,
+                                         long startDelay) {
+        ObjectAnimator translateXAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_X, withValue);
+        translateXAnimator.setDuration(animationDuration).setStartDelay(startDelay);
 
-        if(hasDelay) {
-            animatorSet.play(fadeInAnimator).after(200)
-                    .with(translateYAnimator);
-        } else {
-            animatorSet.play(fadeInAnimator)
-                    .with(translateYAnimator);
-        }
+        return translateXAnimator;
+    }
 
-        return animatorSet;
+    
+    private Animator translateYAnimation(View view, float withValue, long animationDuration,
+                                         long startDelay) {
+        ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, withValue);
+        translateYAnimator.setDuration(animationDuration).setStartDelay(startDelay);
+
+        return translateYAnimator;
     }
 
 
-    private AnimatorSet fadeOutAndTranslateYView(View view, float translationY, boolean hasDelay) {
-        ObjectAnimator fadeOutAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 1, 0);
-        fadeOutAnimator.setDuration(800);
-        ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, translationY);
-        translateYAnimator.setDuration(800);
+    private Animator fadeAnimation(View view, float fromValue, float toValue, long animationDuration,
+                                   long startDelay) {
+        ObjectAnimator fadeAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, fromValue, toValue);
+        fadeAnimator.setDuration(animationDuration).setStartDelay(startDelay);
 
-        AnimatorSet animatorSet = new AnimatorSet();
-
-        if(hasDelay) {
-            animatorSet.play(fadeOutAnimator).after(200)
-                    .with(translateYAnimator);
-        } else {
-            animatorSet.play(fadeOutAnimator)
-                    .with(translateYAnimator);
-        }
-
-        return animatorSet;
+        return fadeAnimator;
     }
 }
