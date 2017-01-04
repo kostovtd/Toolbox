@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.toolbox.kostovtd.util.AnimationsUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,40 +97,14 @@ public class MainActivity extends AppCompatActivity {
                 // handle the scaling and translating
                 // animations logic
                 if(isResized) {
-//                    scaleUpAndTranslateView(mainContainer);
-//                    fadeOutAndTranslateYView(headerContainer, 200, false);
-//                    fadeOutAndTranslateYView(textContacts, 200, false);
-//                    fadeOutAndTranslateYView(textPartners, 200, false);
-//                    fadeOutAndTranslateYView(textSettings, 200, false);
+                    fadeOutAndTranslateHeaderContainer();
+                    scaleUpAndTranslateMainContainer();
+                    fadeOutAndTranslateSideMenu();
                     isResized = false;
                 } else {
-                    // scale down and translate main view
-                    AnimatorSet animatorSet = new AnimatorSet();
-                    List<Animator> scaleDownAndTranslateAnimatorList = new ArrayList<>();
-                    scaleDownAndTranslateAnimatorList.addAll(scaleXYAnimation(mainContainer, 1f, 0.8f, 500, 0));
-                    scaleDownAndTranslateAnimatorList.add(translateXAnimation(mainContainer, 600, 500, 0));
-                    animatorSet.playTogether(scaleDownAndTranslateAnimatorList);
-                    animatorSet.start();
-
-
-                    // fade in and translate side menu
-                    AnimatorSet animatorSetSideMenu = new AnimatorSet();
-                    List<Animator> animatorList = new ArrayList<>();
-//                    animatorList.add(fadeAnimation(textContacts, 0, 1, 800, 200));
-//                    animatorList.add(translateYAnimation(textContacts, -200, 800, 0));
-//                    animatorList.add(fadeAnimation(textPartners, 0, 1, 800, 200));
-//                    animatorList.add(translateYAnimation(textPartners, -200, 800, 0));
-//                    animatorList.add(fadeAnimation(textSettings, 0, 1, 800, 200));
-//                    animatorList.add(translateYAnimation(textSettings, -200, 800, 0));
-
-                    animatorSetSideMenu.play(fadeAnimation(textContacts, 0, 1, 800, 0)).after(500)
-                            .with(translateYAnimation(textContacts, -200, 800, 0)).after(500)
-                            .with(fadeAnimation(textPartners, 0, 1, 800, 0)).after(500)
-                            .with(translateYAnimation(textPartners, -200, 800, 0)).after(500)
-                            .with(fadeAnimation(textSettings, 0, 1, 800, 0)).after(500)
-                            .with(translateYAnimation(textSettings, -200, 800, 0)).after(500);
-
-                    animatorSetSideMenu.start();
+                    fadeInAndTranslateHeaderContainer();
+                    scaleDownAndTranslateMainContainer();
+                    fadeInAndTranslateSideMenu();
                     isResized = true;
                 }
             }
@@ -137,81 +113,100 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private List<Animator> scaleXYAnimation(View view, float fromValue, float toValue, long animationDuration,
-                                            long startDelay) {
-        List<Animator> animatorList = new ArrayList<>();
-
-        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, View.SCALE_X, fromValue, toValue);
-        scaleXAnimator.setDuration(animationDuration).setStartDelay(startDelay);
-
-        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, View.SCALE_Y, fromValue, toValue);
-        scaleYAnimator.setDuration(animationDuration).setStartDelay(startDelay);
-
-        animatorList.add(scaleXAnimator);
-        animatorList.add(scaleYAnimator);
-
-        return animatorList;
+    private void scaleDownAndTranslateMainContainer() {
+        AnimatorSet animatorSet = new AnimatorSet();
+        List<Animator> scaleDownAndTranslateAnimatorList = AnimationsUtil.scaleXYAnimation(mainContainer, 1f, 0.8f, 500, 0);
+        Animator translateXAnimator =  AnimationsUtil.translateXAnimation(mainContainer, 600, 500, 0);
+        scaleDownAndTranslateAnimatorList.add(translateXAnimator);
+        animatorSet.playTogether(scaleDownAndTranslateAnimatorList);
+        animatorSet.start();
     }
 
 
-    private Animator scaleXAnimation(View view, float fromValue, float toValue, long animationDuration,
-                                     long startDelay) {
-        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, View.SCALE_X, fromValue, toValue);
-        scaleXAnimator.setDuration(animationDuration).setStartDelay(startDelay);
-
-        return scaleXAnimator;
+    private void scaleUpAndTranslateMainContainer() {
+        AnimatorSet animatorSet = new AnimatorSet();
+        List<Animator> scaleUpAndTranslateAnimatorList = AnimationsUtil.scaleXYAnimation(mainContainer, 0.8f, 1f, 500, 0);
+        Animator translateXAnimator =  AnimationsUtil.translateXAnimation(mainContainer, 0, 500, 0);
+        scaleUpAndTranslateAnimatorList.add(translateXAnimator);
+        animatorSet.playTogether(scaleUpAndTranslateAnimatorList);
+        animatorSet.start();
     }
 
 
-    private Animator scaleYAnimation(View view, float fromValue, float toValue, long animationDuration,
-                                     long startDelay) {
-        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, View.SCALE_Y, fromValue, toValue);
-        scaleYAnimator.setDuration(animationDuration).setStartDelay(startDelay);
+    private void fadeInAndTranslateSideMenu() {
+        AnimatorSet animatorSetContacts = new AnimatorSet();
+        Animator fadeInContactsAnimator = AnimationsUtil.fadeAnimation(textContacts, 0, 1, 400, 0);
+        Animator translateYContactsAnimator = AnimationsUtil.translateYAnimation(textContacts, -200, 400, 0);
+        animatorSetContacts.play(fadeInContactsAnimator)
+                .with(translateYContactsAnimator);
 
-        return scaleYAnimator;
-    }
-    
-    
-    private List<Animator> translateXYAnimation(View view, float withValue, long animationDuration,
-                                                long startDelay) {
-        List<Animator> animatorList = new ArrayList<>();
-        
-        ObjectAnimator translateXAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_X, withValue);
-        translateXAnimator.setDuration(animationDuration).setStartDelay(startDelay);
-        
-        ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, withValue);
-        translateYAnimator.setDuration(animationDuration).setStartDelay(startDelay);
-        
-        animatorList.add(translateXAnimator);
-        animatorList.add(translateYAnimator);
-        
-        return animatorList;
-    }
-    
-    
-    private Animator translateXAnimation(View view, float withValue, long animationDuration,
-                                         long startDelay) {
-        ObjectAnimator translateXAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_X, withValue);
-        translateXAnimator.setDuration(animationDuration).setStartDelay(startDelay);
 
-        return translateXAnimator;
-    }
+        AnimatorSet animatorSetPartners = new AnimatorSet();
+        Animator fadeInPartnersAnimator = AnimationsUtil.fadeAnimation(textPartners, 0, 1, 400, 0);
+        Animator translateYPartnersAnimator = AnimationsUtil.translateYAnimation(textPartners, -200, 400, 0);
+        animatorSetPartners.play(fadeInPartnersAnimator).after(200)
+                .with(translateYPartnersAnimator);
 
-    
-    private Animator translateYAnimation(View view, float withValue, long animationDuration,
-                                         long startDelay) {
-        ObjectAnimator translateYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, withValue);
-        translateYAnimator.setDuration(animationDuration).setStartDelay(startDelay);
 
-        return translateYAnimator;
+        AnimatorSet animatorSetSettings = new AnimatorSet();
+        Animator fadeInSettingsAnimator = AnimationsUtil.fadeAnimation(textSettings, 0, 1, 400, 0);
+        Animator translateYSettingsAnimator = AnimationsUtil.translateYAnimation(textSettings, -200, 400, 0);
+        animatorSetSettings.play(fadeInSettingsAnimator).after(400)
+                .with(translateYSettingsAnimator);
+
+
+        animatorSetContacts.start();
+        animatorSetPartners.start();
+        animatorSetSettings.start();
     }
 
 
-    private Animator fadeAnimation(View view, float fromValue, float toValue, long animationDuration,
-                                   long startDelay) {
-        ObjectAnimator fadeAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, fromValue, toValue);
-        fadeAnimator.setDuration(animationDuration).setStartDelay(startDelay);
+    private void fadeOutAndTranslateSideMenu() {
+        AnimatorSet animatorSetContacts = new AnimatorSet();
+        Animator fadeOutContactsAnimator = AnimationsUtil.fadeAnimation(textContacts, 1, 0, 400, 0);
+        Animator translateYContactsAnimator = AnimationsUtil.translateYAnimation(textContacts, 0, 400, 0);
+        animatorSetContacts.play(fadeOutContactsAnimator)
+                .with(translateYContactsAnimator);
 
-        return fadeAnimator;
+
+        AnimatorSet animatorSetPartners = new AnimatorSet();
+        Animator fadeOutPartnersAnimator = AnimationsUtil.fadeAnimation(textPartners, 1, 0, 400, 0);
+        Animator translateYPartnersAnimator = AnimationsUtil.translateYAnimation(textPartners, 0, 400, 0);
+        animatorSetPartners.play(fadeOutPartnersAnimator)
+                .with(translateYPartnersAnimator);
+
+
+        AnimatorSet animatorSetSettings = new AnimatorSet();
+        Animator fadeOutSettingsAnimator = AnimationsUtil.fadeAnimation(textSettings, 1, 0, 400, 0);
+        Animator translateYSettingsAnimator = AnimationsUtil.translateYAnimation(textSettings, 0, 400, 0);
+        animatorSetSettings.play(fadeOutSettingsAnimator)
+                .with(translateYSettingsAnimator);
+
+
+        animatorSetSettings.start();
+        animatorSetPartners.start();
+        animatorSetContacts.start();
+    }
+
+
+    private void fadeOutAndTranslateHeaderContainer() {
+        AnimatorSet animatorSetHeaderContainer = new AnimatorSet();
+        Animator fadeOutHeaderContainerAnimator = AnimationsUtil.fadeAnimation(headerContainer, 1, 0, 400, 0);
+        Animator translateYHeaderContainerAnimator = AnimationsUtil.translateYAnimation(headerContainer, 0, 400, 0);
+        animatorSetHeaderContainer.play(fadeOutHeaderContainerAnimator)
+                .with(translateYHeaderContainerAnimator);
+
+        animatorSetHeaderContainer.start();
+    }
+
+
+    private void fadeInAndTranslateHeaderContainer() {
+        AnimatorSet animatorSetHeaderContainer = new AnimatorSet();
+        Animator fadeInHeaderContainerAnimator = AnimationsUtil.fadeAnimation(headerContainer, 0, 1, 400, 0);
+        Animator translateYHeaderContainerAnimator = AnimationsUtil.translateYAnimation(headerContainer, -200, 400, 0);
+        animatorSetHeaderContainer.play(fadeInHeaderContainerAnimator)
+                .with(translateYHeaderContainerAnimator);
+
+        animatorSetHeaderContainer.start();
     }
 }
