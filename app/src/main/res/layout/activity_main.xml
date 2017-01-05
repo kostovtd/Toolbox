@@ -92,6 +92,62 @@
                 android:alpha="0"/>
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="20"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/text_erase_database"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorLight"
+                android:text="Erase Database"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:alpha="0"/>
+
+            <TextView
+                android:id="@+id/text_erase_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/dark_grey"
+                android:text="Erase Tags"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:alpha="0"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="20"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/text_log_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorLight"
+                android:text="Log Out"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:alpha="0"/>
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout

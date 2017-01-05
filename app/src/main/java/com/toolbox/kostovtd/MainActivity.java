@@ -46,6 +46,15 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.text_settings)
     TextView textSettings;
 
+    @BindView(R.id.text_erase_database)
+    TextView textEraseDatabase;
+
+    @BindView(R.id.text_erase_tags)
+    TextView textEraseTags;
+
+    @BindView(R.id.text_log_out)
+    TextView textLogOut;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,9 +164,33 @@ public class MainActivity extends AppCompatActivity {
                 .with(translateYSettingsAnimator);
 
 
+        AnimatorSet animatorSetEraseDatabase = new AnimatorSet();
+        Animator fadeInDatabaseAnimator = AnimationsUtil.fadeAnimation(textEraseDatabase, 0, 1, 200, 0);
+        Animator translateYDatabaseAnimator = AnimationsUtil.translateYAnimation(textEraseDatabase, -100, 200, 0);
+        animatorSetEraseDatabase.play(fadeInDatabaseAnimator).after(600)
+                .with(translateYDatabaseAnimator);
+
+
+        AnimatorSet animatorSetEraseTags = new AnimatorSet();
+        Animator fadeInTagsAnimator = AnimationsUtil.fadeAnimation(textEraseTags, 0, 1, 200, 0);
+        Animator translateYTagsAnimator = AnimationsUtil.translateYAnimation(textEraseTags, -100, 200, 0);
+        animatorSetEraseTags.play(fadeInTagsAnimator).after(800)
+                .with(translateYTagsAnimator);
+
+
+        AnimatorSet animatorSetLogOut = new AnimatorSet();
+        Animator fadeInLogOutAnimator = AnimationsUtil.fadeAnimation(textLogOut, 0, 1, 200, 0);
+        Animator translateYLogOutAnimator = AnimationsUtil.translateYAnimation(textLogOut, -100, 200, 0);
+        animatorSetLogOut.play(fadeInLogOutAnimator).after(1000)
+                .with(translateYLogOutAnimator);
+
+
         animatorSetContacts.start();
         animatorSetPartners.start();
         animatorSetSettings.start();
+        animatorSetEraseDatabase.start();
+        animatorSetEraseTags.start();
+        animatorSetLogOut.start();
     }
 
 
@@ -183,6 +216,30 @@ public class MainActivity extends AppCompatActivity {
                 .with(translateYSettingsAnimator);
 
 
+        AnimatorSet animatorSetEraseDatabase = new AnimatorSet();
+        Animator fadeOutDatabaseAnimator = AnimationsUtil.fadeAnimation(textEraseDatabase, 1, 0, 400, 0);
+        Animator translateYDatabaseAnimator = AnimationsUtil.translateYAnimation(textEraseDatabase, 0, 400, 0);
+        animatorSetEraseDatabase.play(fadeOutDatabaseAnimator)
+                .with(translateYDatabaseAnimator);
+
+
+        AnimatorSet animatorSetEraseTags = new AnimatorSet();
+        Animator fadeOutTagsAnimator = AnimationsUtil.fadeAnimation(textEraseTags, 1, 0, 400, 0);
+        Animator translateYTagsAnimator = AnimationsUtil.translateYAnimation(textEraseTags, 0, 400, 0);
+        animatorSetEraseTags.play(fadeOutTagsAnimator)
+                .with(translateYTagsAnimator);
+
+
+        AnimatorSet animatorSetLogOut = new AnimatorSet();
+        Animator fadeOutLogOutAnimator = AnimationsUtil.fadeAnimation(textLogOut, 1, 0, 400, 0);
+        Animator translateYLogOutAnimator = AnimationsUtil.translateYAnimation(textLogOut, 0, 400, 0);
+        animatorSetLogOut.play(fadeOutLogOutAnimator)
+                .with(translateYLogOutAnimator);
+
+
+        animatorSetLogOut.start();
+        animatorSetEraseTags.start();
+        animatorSetEraseDatabase.start();
         animatorSetSettings.start();
         animatorSetPartners.start();
         animatorSetContacts.start();
