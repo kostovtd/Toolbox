@@ -5,10 +5,13 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.toolbox.kostovtd.util.AnimationsUtil;
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     @BindView(R.id.main_container)
-    LinearLayout mainContainer;
+    RelativeLayout mainContainer;
 
     @BindView(R.id.header_container)
     LinearLayout headerContainer;
@@ -55,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.text_log_out)
     TextView textLogOut;
 
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         setTitle("");
 
         ButterKnife.bind(this);
+
+        setUpRecyclerViewAndAdapter();
 
         setUpToolbar();
     }
@@ -87,6 +95,31 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onDestroy: hit");
         super.onDestroy();
     }
+
+
+    private void setUpRecyclerViewAndAdapter() {
+        List<Integer> data = new ArrayList<>();
+        data.add(R.drawable.ic_account_balance_white);
+        data.add(R.drawable.ic_backup_white);
+        data.add(R.drawable.ic_build_white);
+        data.add(R.drawable.ic_fingerprint_white);
+        data.add(R.drawable.ic_menu_white);
+        data.add(R.drawable.ic_account_balance_white);
+        data.add(R.drawable.ic_backup_white);
+        data.add(R.drawable.ic_build_white);
+        data.add(R.drawable.ic_fingerprint_white);
+        data.add(R.drawable.ic_menu_white);
+        data.add(R.drawable.ic_account_balance_white);
+        data.add(R.drawable.ic_backup_white);
+        data.add(R.drawable.ic_build_white);
+        data.add(R.drawable.ic_fingerprint_white);
+        data.add(R.drawable.ic_menu_white);
+        CustomAdapter adapter = new CustomAdapter(MainActivity.this, data);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+    }
+
 
     /**
      * Set up the {@link Toolbar) the current screen
@@ -151,22 +184,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         AnimatorSet animatorSetPartners = new AnimatorSet();
-        Animator fadeInPartnersAnimator = AnimationsUtil.fadeAnimation(textPartners, 0, 1, 400, 0);
-        Animator translateYPartnersAnimator = AnimationsUtil.translateYAnimation(textPartners, -200, 400, 0);
+        Animator fadeInPartnersAnimator = AnimationsUtil.fadeAnimation(textPartners, 0, 1, 350, 0);
+        Animator translateYPartnersAnimator = AnimationsUtil.translateYAnimation(textPartners, -200, 350, 0);
         animatorSetPartners.play(fadeInPartnersAnimator).after(200)
                 .with(translateYPartnersAnimator);
 
 
         AnimatorSet animatorSetSettings = new AnimatorSet();
-        Animator fadeInSettingsAnimator = AnimationsUtil.fadeAnimation(textSettings, 0, 1, 400, 0);
-        Animator translateYSettingsAnimator = AnimationsUtil.translateYAnimation(textSettings, -200, 400, 0);
+        Animator fadeInSettingsAnimator = AnimationsUtil.fadeAnimation(textSettings, 0, 1, 300, 0);
+        Animator translateYSettingsAnimator = AnimationsUtil.translateYAnimation(textSettings, -200, 300, 0);
         animatorSetSettings.play(fadeInSettingsAnimator).after(400)
                 .with(translateYSettingsAnimator);
 
 
         AnimatorSet animatorSetEraseDatabase = new AnimatorSet();
-        Animator fadeInDatabaseAnimator = AnimationsUtil.fadeAnimation(textEraseDatabase, 0, 1, 200, 0);
-        Animator translateYDatabaseAnimator = AnimationsUtil.translateYAnimation(textEraseDatabase, -100, 200, 0);
+        Animator fadeInDatabaseAnimator = AnimationsUtil.fadeAnimation(textEraseDatabase, 0, 1, 250, 0);
+        Animator translateYDatabaseAnimator = AnimationsUtil.translateYAnimation(textEraseDatabase, -100, 250, 0);
         animatorSetEraseDatabase.play(fadeInDatabaseAnimator).after(600)
                 .with(translateYDatabaseAnimator);
 
@@ -179,8 +212,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         AnimatorSet animatorSetLogOut = new AnimatorSet();
-        Animator fadeInLogOutAnimator = AnimationsUtil.fadeAnimation(textLogOut, 0, 1, 200, 0);
-        Animator translateYLogOutAnimator = AnimationsUtil.translateYAnimation(textLogOut, -100, 200, 0);
+        Animator fadeInLogOutAnimator = AnimationsUtil.fadeAnimation(textLogOut, 0, 1, 150, 0);
+        Animator translateYLogOutAnimator = AnimationsUtil.translateYAnimation(textLogOut, -100, 150, 0);
         animatorSetLogOut.play(fadeInLogOutAnimator).after(1000)
                 .with(translateYLogOutAnimator);
 
