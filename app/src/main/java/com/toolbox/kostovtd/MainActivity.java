@@ -2,9 +2,8 @@ package com.toolbox.kostovtd;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -157,8 +156,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void scaleDownAndTranslateMainContainer() {
         AnimatorSet animatorSet = new AnimatorSet();
-        List<Animator> scaleDownAndTranslateAnimatorList = AnimationsUtil.scaleXYAnimation(mainContainer, 1f, 0.8f, 500, 0);
-        Animator translateXAnimator =  AnimationsUtil.translateXAnimation(mainContainer, 600, 500, 0);
+        List<Animator> scaleDownAndTranslateAnimatorList = AnimationsUtil.scaleXYAnimation(mainContainer, 1f, 0.8f, AnimationsUtil.ANIMATION_DURATION_500_MS);
+        Animator translateXAnimator =  AnimationsUtil.translateXAnimation(mainContainer, 600, AnimationsUtil.ANIMATION_DURATION_500_MS);
         scaleDownAndTranslateAnimatorList.add(translateXAnimator);
         animatorSet.playTogether(scaleDownAndTranslateAnimatorList);
         animatorSet.start();
@@ -167,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void scaleUpAndTranslateMainContainer() {
         AnimatorSet animatorSet = new AnimatorSet();
-        List<Animator> scaleUpAndTranslateAnimatorList = AnimationsUtil.scaleXYAnimation(mainContainer, 0.8f, 1f, 500, 0);
-        Animator translateXAnimator =  AnimationsUtil.translateXAnimation(mainContainer, 0, 500, 0);
+        List<Animator> scaleUpAndTranslateAnimatorList = AnimationsUtil.scaleXYAnimation(mainContainer, 0.8f, 1f, AnimationsUtil.ANIMATION_DURATION_500_MS);
+        Animator translateXAnimator =  AnimationsUtil.translateXAnimation(mainContainer, 0, AnimationsUtil.ANIMATION_DURATION_500_MS);
         scaleUpAndTranslateAnimatorList.add(translateXAnimator);
         animatorSet.playTogether(scaleUpAndTranslateAnimatorList);
         animatorSet.start();
@@ -177,43 +176,49 @@ public class MainActivity extends AppCompatActivity {
 
     private void fadeInAndTranslateSideMenu() {
         AnimatorSet animatorSetContacts = new AnimatorSet();
-        Animator fadeInContactsAnimator = AnimationsUtil.fadeAnimation(textContacts, 0, 1, 400, 0);
-        Animator translateYContactsAnimator = AnimationsUtil.translateYAnimation(textContacts, -200, 400, 0);
+        Animator fadeInContactsAnimator = AnimationsUtil.fadeAnimation(textContacts, AnimationsUtil.FULLY_TRANSPARENT,
+                AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_400_MS);
+        Animator translateYContactsAnimator = AnimationsUtil.translateYAnimation(textContacts, -200, AnimationsUtil.ANIMATION_DURATION_400_MS);
         animatorSetContacts.play(fadeInContactsAnimator)
                 .with(translateYContactsAnimator);
 
 
         AnimatorSet animatorSetPartners = new AnimatorSet();
-        Animator fadeInPartnersAnimator = AnimationsUtil.fadeAnimation(textPartners, 0, 1, 350, 0);
-        Animator translateYPartnersAnimator = AnimationsUtil.translateYAnimation(textPartners, -200, 350, 0);
+        Animator fadeInPartnersAnimator = AnimationsUtil.fadeAnimation(textPartners, AnimationsUtil.FULLY_TRANSPARENT,
+                AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_350_MS);
+        Animator translateYPartnersAnimator = AnimationsUtil.translateYAnimation(textPartners, -200, AnimationsUtil.ANIMATION_DURATION_350_MS);
         animatorSetPartners.play(fadeInPartnersAnimator).after(200)
                 .with(translateYPartnersAnimator);
 
 
         AnimatorSet animatorSetSettings = new AnimatorSet();
-        Animator fadeInSettingsAnimator = AnimationsUtil.fadeAnimation(textSettings, 0, 1, 300, 0);
-        Animator translateYSettingsAnimator = AnimationsUtil.translateYAnimation(textSettings, -200, 300, 0);
+        Animator fadeInSettingsAnimator = AnimationsUtil.fadeAnimation(textSettings, AnimationsUtil.FULLY_TRANSPARENT,
+                AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_300_MS);
+        Animator translateYSettingsAnimator = AnimationsUtil.translateYAnimation(textSettings, -200, AnimationsUtil.ANIMATION_DURATION_300_MS);
         animatorSetSettings.play(fadeInSettingsAnimator).after(400)
                 .with(translateYSettingsAnimator);
 
 
         AnimatorSet animatorSetEraseDatabase = new AnimatorSet();
-        Animator fadeInDatabaseAnimator = AnimationsUtil.fadeAnimation(textEraseDatabase, 0, 1, 250, 0);
-        Animator translateYDatabaseAnimator = AnimationsUtil.translateYAnimation(textEraseDatabase, -100, 250, 0);
+        Animator fadeInDatabaseAnimator = AnimationsUtil.fadeAnimation(textEraseDatabase, AnimationsUtil.FULLY_TRANSPARENT,
+                AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_250_MS);
+        Animator translateYDatabaseAnimator = AnimationsUtil.translateYAnimation(textEraseDatabase, -100, AnimationsUtil.ANIMATION_DURATION_250_MS);
         animatorSetEraseDatabase.play(fadeInDatabaseAnimator).after(600)
                 .with(translateYDatabaseAnimator);
 
 
         AnimatorSet animatorSetEraseTags = new AnimatorSet();
-        Animator fadeInTagsAnimator = AnimationsUtil.fadeAnimation(textEraseTags, 0, 1, 200, 0);
-        Animator translateYTagsAnimator = AnimationsUtil.translateYAnimation(textEraseTags, -100, 200, 0);
+        Animator fadeInTagsAnimator = AnimationsUtil.fadeAnimation(textEraseTags, AnimationsUtil.FULLY_TRANSPARENT,
+                AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_200_MS);
+        Animator translateYTagsAnimator = AnimationsUtil.translateYAnimation(textEraseTags, -100, AnimationsUtil.ANIMATION_DURATION_200_MS);
         animatorSetEraseTags.play(fadeInTagsAnimator).after(800)
                 .with(translateYTagsAnimator);
 
 
         AnimatorSet animatorSetLogOut = new AnimatorSet();
-        Animator fadeInLogOutAnimator = AnimationsUtil.fadeAnimation(textLogOut, 0, 1, 150, 0);
-        Animator translateYLogOutAnimator = AnimationsUtil.translateYAnimation(textLogOut, -100, 150, 0);
+        Animator fadeInLogOutAnimator = AnimationsUtil.fadeAnimation(textLogOut, AnimationsUtil.FULLY_TRANSPARENT,
+                AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_150_MS);
+        Animator translateYLogOutAnimator = AnimationsUtil.translateYAnimation(textLogOut, -100, AnimationsUtil.ANIMATION_DURATION_150_MS);
         animatorSetLogOut.play(fadeInLogOutAnimator).after(1000)
                 .with(translateYLogOutAnimator);
 
@@ -229,43 +234,49 @@ public class MainActivity extends AppCompatActivity {
 
     private void fadeOutAndTranslateSideMenu() {
         AnimatorSet animatorSetContacts = new AnimatorSet();
-        Animator fadeOutContactsAnimator = AnimationsUtil.fadeAnimation(textContacts, 1, 0, 400, 0);
-        Animator translateYContactsAnimator = AnimationsUtil.translateYAnimation(textContacts, 0, 400, 0);
+        Animator fadeOutContactsAnimator = AnimationsUtil.fadeAnimation(textContacts, AnimationsUtil.FULLY_VISIBLE,
+                AnimationsUtil.FULLY_TRANSPARENT, AnimationsUtil.ANIMATION_DURATION_400_MS);
+        Animator translateYContactsAnimator = AnimationsUtil.translateYAnimation(textContacts, 0, AnimationsUtil.ANIMATION_DURATION_400_MS);
         animatorSetContacts.play(fadeOutContactsAnimator)
                 .with(translateYContactsAnimator);
 
 
         AnimatorSet animatorSetPartners = new AnimatorSet();
-        Animator fadeOutPartnersAnimator = AnimationsUtil.fadeAnimation(textPartners, 1, 0, 400, 0);
-        Animator translateYPartnersAnimator = AnimationsUtil.translateYAnimation(textPartners, 0, 400, 0);
+        Animator fadeOutPartnersAnimator = AnimationsUtil.fadeAnimation(textPartners, AnimationsUtil.FULLY_VISIBLE,
+                AnimationsUtil.FULLY_TRANSPARENT, AnimationsUtil.ANIMATION_DURATION_350_MS);
+        Animator translateYPartnersAnimator = AnimationsUtil.translateYAnimation(textPartners, 0, AnimationsUtil.ANIMATION_DURATION_350_MS);
         animatorSetPartners.play(fadeOutPartnersAnimator)
                 .with(translateYPartnersAnimator);
 
 
         AnimatorSet animatorSetSettings = new AnimatorSet();
-        Animator fadeOutSettingsAnimator = AnimationsUtil.fadeAnimation(textSettings, 1, 0, 400, 0);
-        Animator translateYSettingsAnimator = AnimationsUtil.translateYAnimation(textSettings, 0, 400, 0);
+        Animator fadeOutSettingsAnimator = AnimationsUtil.fadeAnimation(textSettings, AnimationsUtil.FULLY_VISIBLE,
+                AnimationsUtil.FULLY_TRANSPARENT, AnimationsUtil.ANIMATION_DURATION_300_MS);
+        Animator translateYSettingsAnimator = AnimationsUtil.translateYAnimation(textSettings, 0, AnimationsUtil.ANIMATION_DURATION_300_MS);
         animatorSetSettings.play(fadeOutSettingsAnimator)
                 .with(translateYSettingsAnimator);
 
 
         AnimatorSet animatorSetEraseDatabase = new AnimatorSet();
-        Animator fadeOutDatabaseAnimator = AnimationsUtil.fadeAnimation(textEraseDatabase, 1, 0, 400, 0);
-        Animator translateYDatabaseAnimator = AnimationsUtil.translateYAnimation(textEraseDatabase, 0, 400, 0);
+        Animator fadeOutDatabaseAnimator = AnimationsUtil.fadeAnimation(textEraseDatabase, AnimationsUtil.FULLY_VISIBLE,
+                AnimationsUtil.FULLY_TRANSPARENT, AnimationsUtil.ANIMATION_DURATION_250_MS);
+        Animator translateYDatabaseAnimator = AnimationsUtil.translateYAnimation(textEraseDatabase, 0, AnimationsUtil.ANIMATION_DURATION_250_MS);
         animatorSetEraseDatabase.play(fadeOutDatabaseAnimator)
                 .with(translateYDatabaseAnimator);
 
 
         AnimatorSet animatorSetEraseTags = new AnimatorSet();
-        Animator fadeOutTagsAnimator = AnimationsUtil.fadeAnimation(textEraseTags, 1, 0, 400, 0);
-        Animator translateYTagsAnimator = AnimationsUtil.translateYAnimation(textEraseTags, 0, 400, 0);
+        Animator fadeOutTagsAnimator = AnimationsUtil.fadeAnimation(textEraseTags, AnimationsUtil.FULLY_VISIBLE,
+                AnimationsUtil.FULLY_TRANSPARENT, AnimationsUtil.ANIMATION_DURATION_200_MS);
+        Animator translateYTagsAnimator = AnimationsUtil.translateYAnimation(textEraseTags, 0, AnimationsUtil.ANIMATION_DURATION_200_MS);
         animatorSetEraseTags.play(fadeOutTagsAnimator)
                 .with(translateYTagsAnimator);
 
 
         AnimatorSet animatorSetLogOut = new AnimatorSet();
-        Animator fadeOutLogOutAnimator = AnimationsUtil.fadeAnimation(textLogOut, 1, 0, 400, 0);
-        Animator translateYLogOutAnimator = AnimationsUtil.translateYAnimation(textLogOut, 0, 400, 0);
+        Animator fadeOutLogOutAnimator = AnimationsUtil.fadeAnimation(textLogOut, AnimationsUtil.FULLY_VISIBLE,
+                AnimationsUtil.FULLY_TRANSPARENT, AnimationsUtil.ANIMATION_DURATION_150_MS);
+        Animator translateYLogOutAnimator = AnimationsUtil.translateYAnimation(textLogOut, 0, AnimationsUtil.ANIMATION_DURATION_150_MS);
         animatorSetLogOut.play(fadeOutLogOutAnimator)
                 .with(translateYLogOutAnimator);
 
@@ -281,8 +292,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void fadeOutAndTranslateHeaderContainer() {
         AnimatorSet animatorSetHeaderContainer = new AnimatorSet();
-        Animator fadeOutHeaderContainerAnimator = AnimationsUtil.fadeAnimation(headerContainer, 1, 0, 400, 0);
-        Animator translateYHeaderContainerAnimator = AnimationsUtil.translateYAnimation(headerContainer, 0, 400, 0);
+        Animator fadeOutHeaderContainerAnimator = AnimationsUtil.fadeAnimation(headerContainer, AnimationsUtil.FULLY_VISIBLE,
+                AnimationsUtil.FULLY_TRANSPARENT, AnimationsUtil.ANIMATION_DURATION_400_MS);
+        Animator translateYHeaderContainerAnimator = AnimationsUtil.translateYAnimation(headerContainer, 0, AnimationsUtil.ANIMATION_DURATION_400_MS);
         animatorSetHeaderContainer.play(fadeOutHeaderContainerAnimator)
                 .with(translateYHeaderContainerAnimator);
 
@@ -292,11 +304,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void fadeInAndTranslateHeaderContainer() {
         AnimatorSet animatorSetHeaderContainer = new AnimatorSet();
-        Animator fadeInHeaderContainerAnimator = AnimationsUtil.fadeAnimation(headerContainer, 0, 1, 400, 0);
-        Animator translateYHeaderContainerAnimator = AnimationsUtil.translateYAnimation(headerContainer, -200, 400, 0);
+        Animator fadeInHeaderContainerAnimator = AnimationsUtil.fadeAnimation(headerContainer, AnimationsUtil.FULLY_TRANSPARENT,
+                AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_400_MS);
+        Animator translateYHeaderContainerAnimator = AnimationsUtil.translateYAnimation(headerContainer, -200, AnimationsUtil.ANIMATION_DURATION_400_MS);
         animatorSetHeaderContainer.play(fadeInHeaderContainerAnimator)
                 .with(translateYHeaderContainerAnimator);
 
         animatorSetHeaderContainer.start();
     }
+
+
 }
