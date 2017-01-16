@@ -157,7 +157,8 @@ public class MainActivity extends AppCompatActivity {
     private void scaleDownAndTranslateMainContainer() {
         AnimatorSet animatorSet = new AnimatorSet();
         List<Animator> scaleDownAndTranslateAnimatorList = AnimationsUtil.scaleXYAnimation(mainContainer, 1f, 0.8f, AnimationsUtil.ANIMATION_DURATION_500_MS);
-        Animator translateXAnimator =  AnimationsUtil.translateXAnimation(mainContainer, 600, AnimationsUtil.ANIMATION_DURATION_500_MS);
+        float translateXDp = AnimationsUtil.convertPxToDip(MainActivity.this, 600);
+        Animator translateXAnimator =  AnimationsUtil.translateXAnimation(mainContainer, translateXDp, AnimationsUtil.ANIMATION_DURATION_500_MS);
         scaleDownAndTranslateAnimatorList.add(translateXAnimator);
         animatorSet.playTogether(scaleDownAndTranslateAnimatorList);
         animatorSet.start();
@@ -178,7 +179,8 @@ public class MainActivity extends AppCompatActivity {
         AnimatorSet animatorSetContacts = new AnimatorSet();
         Animator fadeInContactsAnimator = AnimationsUtil.fadeAnimation(textContacts, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_400_MS);
-        Animator translateYContactsAnimator = AnimationsUtil.translateYAnimation(textContacts, -200, AnimationsUtil.ANIMATION_DURATION_400_MS);
+        float translateYContactsDp = AnimationsUtil.convertPxToDip(MainActivity.this, -200);
+        Animator translateYContactsAnimator = AnimationsUtil.translateYAnimation(textContacts, translateYContactsDp, AnimationsUtil.ANIMATION_DURATION_400_MS);
         animatorSetContacts.play(fadeInContactsAnimator)
                 .with(translateYContactsAnimator);
 
@@ -186,40 +188,45 @@ public class MainActivity extends AppCompatActivity {
         AnimatorSet animatorSetPartners = new AnimatorSet();
         Animator fadeInPartnersAnimator = AnimationsUtil.fadeAnimation(textPartners, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_350_MS);
-        Animator translateYPartnersAnimator = AnimationsUtil.translateYAnimation(textPartners, -200, AnimationsUtil.ANIMATION_DURATION_350_MS);
-        animatorSetPartners.play(fadeInPartnersAnimator).after(200)
+        float translateYPartnersDp = AnimationsUtil.convertPxToDip(MainActivity.this, -200);
+        Animator translateYPartnersAnimator = AnimationsUtil.translateYAnimation(textPartners, translateYPartnersDp, AnimationsUtil.ANIMATION_DURATION_350_MS);
+        animatorSetPartners.play(fadeInPartnersAnimator).after(AnimationsUtil.ANIMATION_DELAY_200_MS)
                 .with(translateYPartnersAnimator);
 
 
         AnimatorSet animatorSetSettings = new AnimatorSet();
         Animator fadeInSettingsAnimator = AnimationsUtil.fadeAnimation(textSettings, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_300_MS);
-        Animator translateYSettingsAnimator = AnimationsUtil.translateYAnimation(textSettings, -200, AnimationsUtil.ANIMATION_DURATION_300_MS);
-        animatorSetSettings.play(fadeInSettingsAnimator).after(400)
+        float translateYSettingsDp = AnimationsUtil.convertPxToDip(MainActivity.this, -200);
+        Animator translateYSettingsAnimator = AnimationsUtil.translateYAnimation(textSettings, translateYSettingsDp, AnimationsUtil.ANIMATION_DURATION_300_MS);
+        animatorSetSettings.play(fadeInSettingsAnimator).after(AnimationsUtil.ANIMATION_DELAY_400_MS)
                 .with(translateYSettingsAnimator);
 
 
         AnimatorSet animatorSetEraseDatabase = new AnimatorSet();
         Animator fadeInDatabaseAnimator = AnimationsUtil.fadeAnimation(textEraseDatabase, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_250_MS);
-        Animator translateYDatabaseAnimator = AnimationsUtil.translateYAnimation(textEraseDatabase, -100, AnimationsUtil.ANIMATION_DURATION_250_MS);
-        animatorSetEraseDatabase.play(fadeInDatabaseAnimator).after(600)
+        float translateYDatabaseDp = AnimationsUtil.convertPxToDip(MainActivity.this, -100);
+        Animator translateYDatabaseAnimator = AnimationsUtil.translateYAnimation(textEraseDatabase, translateYDatabaseDp, AnimationsUtil.ANIMATION_DURATION_250_MS);
+        animatorSetEraseDatabase.play(fadeInDatabaseAnimator).after(AnimationsUtil.ANIMATION_DELAY_600_MS)
                 .with(translateYDatabaseAnimator);
 
 
         AnimatorSet animatorSetEraseTags = new AnimatorSet();
         Animator fadeInTagsAnimator = AnimationsUtil.fadeAnimation(textEraseTags, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_200_MS);
-        Animator translateYTagsAnimator = AnimationsUtil.translateYAnimation(textEraseTags, -100, AnimationsUtil.ANIMATION_DURATION_200_MS);
-        animatorSetEraseTags.play(fadeInTagsAnimator).after(800)
+        float translateYTagsDp = AnimationsUtil.convertPxToDip(MainActivity.this, -100);
+        Animator translateYTagsAnimator = AnimationsUtil.translateYAnimation(textEraseTags, translateYTagsDp, AnimationsUtil.ANIMATION_DURATION_200_MS);
+        animatorSetEraseTags.play(fadeInTagsAnimator).after(AnimationsUtil.ANIMATION_DELAY_800_MS)
                 .with(translateYTagsAnimator);
 
 
         AnimatorSet animatorSetLogOut = new AnimatorSet();
         Animator fadeInLogOutAnimator = AnimationsUtil.fadeAnimation(textLogOut, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_150_MS);
-        Animator translateYLogOutAnimator = AnimationsUtil.translateYAnimation(textLogOut, -100, AnimationsUtil.ANIMATION_DURATION_150_MS);
-        animatorSetLogOut.play(fadeInLogOutAnimator).after(1000)
+        float translateYLogOutDp = AnimationsUtil.convertPxToDip(MainActivity.this, -100);
+        Animator translateYLogOutAnimator = AnimationsUtil.translateYAnimation(textLogOut, translateYLogOutDp, AnimationsUtil.ANIMATION_DURATION_150_MS);
+        animatorSetLogOut.play(fadeInLogOutAnimator).after(AnimationsUtil.ANIMATION_DELAY_1000_MS)
                 .with(translateYLogOutAnimator);
 
 
@@ -306,7 +313,9 @@ public class MainActivity extends AppCompatActivity {
         AnimatorSet animatorSetHeaderContainer = new AnimatorSet();
         Animator fadeInHeaderContainerAnimator = AnimationsUtil.fadeAnimation(headerContainer, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_400_MS);
-        Animator translateYHeaderContainerAnimator = AnimationsUtil.translateYAnimation(headerContainer, -200, AnimationsUtil.ANIMATION_DURATION_400_MS);
+        float translateYHeaderContainerDp = AnimationsUtil.convertPxToDip(MainActivity.this, -200);
+        Animator translateYHeaderContainerAnimator = AnimationsUtil.translateYAnimation(headerContainer, translateYHeaderContainerDp,
+                AnimationsUtil.ANIMATION_DURATION_400_MS);
         animatorSetHeaderContainer.play(fadeInHeaderContainerAnimator)
                 .with(translateYHeaderContainerAnimator);
 

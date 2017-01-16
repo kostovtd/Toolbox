@@ -29,6 +29,13 @@ public class AnimationsUtil {
     public static final long ANIMATION_DURATION_200_MS = 200;
     public static final long ANIMATION_DURATION_150_MS = 150;
 
+    // ANIMATION DELAY CONSTANTS
+    public static final long ANIMATION_DELAY_200_MS = 200;
+    public static final long ANIMATION_DELAY_400_MS = 400;
+    public static final long ANIMATION_DELAY_600_MS = 600;
+    public static final long ANIMATION_DELAY_800_MS = 800;
+    public static final long ANIMATION_DELAY_1000_MS = 1000;
+
 
     public static List<Animator> scaleXYAnimation(View view, float fromValue, float toValue, long animationDuration) {
         List<Animator> animatorList = new ArrayList<>();
