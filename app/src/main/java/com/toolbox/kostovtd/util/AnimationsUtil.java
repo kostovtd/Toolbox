@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -112,5 +114,11 @@ public class AnimationsUtil {
     public static float convertPxToDip(Context context, int pxValue) {
         Resources resources = context.getResources();
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, pxValue, resources.getDisplayMetrics());
+    }
+
+
+    public static float getScreenDensity(Context context) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return metrics.density;
     }
 }

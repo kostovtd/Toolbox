@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private boolean isResized = false;
+    private float screenDensityMultiplier = 0;
 
     @BindView(R.id.nav_bar)
     Toolbar toolbar;
@@ -73,7 +75,11 @@ public class MainActivity extends AppCompatActivity {
         setUpRecyclerViewAndAdapter();
 
         setUpToolbar();
+
+        screenDensityMultiplier = AnimationsUtil.getScreenDensity(MainActivity.this);
+        Log.d(TAG, "screenDensityMultiplier: " + screenDensityMultiplier);
     }
+
 
     @Override
     protected void onResume() {
@@ -155,9 +161,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void scaleDownAndTranslateMainContainer() {
+        int pxMdpi = 170; // the default value for mdpi screens
+                          // the actual px value will be calculated based on
+                          // the current screenDensityMultiplier
+        int actualPx = Math.round(pxMdpi * screenDensityMultiplier);
+
         AnimatorSet animatorSet = new AnimatorSet();
         List<Animator> scaleDownAndTranslateAnimatorList = AnimationsUtil.scaleXYAnimation(mainContainer, 1f, 0.8f, AnimationsUtil.ANIMATION_DURATION_500_MS);
-        float translateXDp = AnimationsUtil.convertPxToDip(MainActivity.this, 600);
+        float translateXDp = AnimationsUtil.convertPxToDip(MainActivity.this, actualPx);
         Animator translateXAnimator =  AnimationsUtil.translateXAnimation(mainContainer, translateXDp, AnimationsUtil.ANIMATION_DURATION_500_MS);
         scaleDownAndTranslateAnimatorList.add(translateXAnimator);
         animatorSet.playTogether(scaleDownAndTranslateAnimatorList);
@@ -176,55 +187,70 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void fadeInAndTranslateSideMenu() {
+        int pxYContactsMdpi = -55; // the default value for mdpi screens
+                          // the actual px value will be calculated based on
+                          // the current screenDensityMultiplier
+        int actualPxYContactsMdpi = Math.round(pxYContactsMdpi * screenDensityMultiplier);
+
         AnimatorSet animatorSetContacts = new AnimatorSet();
         Animator fadeInContactsAnimator = AnimationsUtil.fadeAnimation(textContacts, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_400_MS);
-        float translateYContactsDp = AnimationsUtil.convertPxToDip(MainActivity.this, -200);
+        float translateYContactsDp = AnimationsUtil.convertPxToDip(MainActivity.this, actualPxYContactsMdpi);
         Animator translateYContactsAnimator = AnimationsUtil.translateYAnimation(textContacts, translateYContactsDp, AnimationsUtil.ANIMATION_DURATION_400_MS);
         animatorSetContacts.play(fadeInContactsAnimator)
                 .with(translateYContactsAnimator);
 
 
+        int pxYPartnersMdpi = -55;
+        int actualPxYPartnersMdpi = Math.round(pxYPartnersMdpi * screenDensityMultiplier);
         AnimatorSet animatorSetPartners = new AnimatorSet();
         Animator fadeInPartnersAnimator = AnimationsUtil.fadeAnimation(textPartners, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_350_MS);
-        float translateYPartnersDp = AnimationsUtil.convertPxToDip(MainActivity.this, -200);
+        float translateYPartnersDp = AnimationsUtil.convertPxToDip(MainActivity.this, actualPxYPartnersMdpi);
         Animator translateYPartnersAnimator = AnimationsUtil.translateYAnimation(textPartners, translateYPartnersDp, AnimationsUtil.ANIMATION_DURATION_350_MS);
         animatorSetPartners.play(fadeInPartnersAnimator).after(AnimationsUtil.ANIMATION_DELAY_200_MS)
                 .with(translateYPartnersAnimator);
 
 
+        int pxYSettingsMdpi = -55;
+        int actualPxYSettingsMdpi = Math.round(pxYSettingsMdpi * screenDensityMultiplier);
         AnimatorSet animatorSetSettings = new AnimatorSet();
         Animator fadeInSettingsAnimator = AnimationsUtil.fadeAnimation(textSettings, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_300_MS);
-        float translateYSettingsDp = AnimationsUtil.convertPxToDip(MainActivity.this, -200);
+        float translateYSettingsDp = AnimationsUtil.convertPxToDip(MainActivity.this, actualPxYSettingsMdpi);
         Animator translateYSettingsAnimator = AnimationsUtil.translateYAnimation(textSettings, translateYSettingsDp, AnimationsUtil.ANIMATION_DURATION_300_MS);
         animatorSetSettings.play(fadeInSettingsAnimator).after(AnimationsUtil.ANIMATION_DELAY_400_MS)
                 .with(translateYSettingsAnimator);
 
 
+        int pxYDatabaseMdpi = -30;
+        int actualPxYDatabaseMdpi = Math.round(pxYDatabaseMdpi * screenDensityMultiplier);
         AnimatorSet animatorSetEraseDatabase = new AnimatorSet();
         Animator fadeInDatabaseAnimator = AnimationsUtil.fadeAnimation(textEraseDatabase, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_250_MS);
-        float translateYDatabaseDp = AnimationsUtil.convertPxToDip(MainActivity.this, -100);
+        float translateYDatabaseDp = AnimationsUtil.convertPxToDip(MainActivity.this, actualPxYDatabaseMdpi);
         Animator translateYDatabaseAnimator = AnimationsUtil.translateYAnimation(textEraseDatabase, translateYDatabaseDp, AnimationsUtil.ANIMATION_DURATION_250_MS);
         animatorSetEraseDatabase.play(fadeInDatabaseAnimator).after(AnimationsUtil.ANIMATION_DELAY_600_MS)
                 .with(translateYDatabaseAnimator);
 
 
+        int pxYTagsMdpi = -30;
+        int actualPxYTagsMdpi = Math.round(pxYTagsMdpi * screenDensityMultiplier);
         AnimatorSet animatorSetEraseTags = new AnimatorSet();
         Animator fadeInTagsAnimator = AnimationsUtil.fadeAnimation(textEraseTags, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_200_MS);
-        float translateYTagsDp = AnimationsUtil.convertPxToDip(MainActivity.this, -100);
+        float translateYTagsDp = AnimationsUtil.convertPxToDip(MainActivity.this, actualPxYTagsMdpi);
         Animator translateYTagsAnimator = AnimationsUtil.translateYAnimation(textEraseTags, translateYTagsDp, AnimationsUtil.ANIMATION_DURATION_200_MS);
         animatorSetEraseTags.play(fadeInTagsAnimator).after(AnimationsUtil.ANIMATION_DELAY_800_MS)
                 .with(translateYTagsAnimator);
 
 
+        int pxYLogOutMdpi = -30;
+        int actualPxYLogOutMdpi = Math.round(pxYLogOutMdpi * screenDensityMultiplier);
         AnimatorSet animatorSetLogOut = new AnimatorSet();
         Animator fadeInLogOutAnimator = AnimationsUtil.fadeAnimation(textLogOut, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_150_MS);
-        float translateYLogOutDp = AnimationsUtil.convertPxToDip(MainActivity.this, -100);
+        float translateYLogOutDp = AnimationsUtil.convertPxToDip(MainActivity.this, actualPxYLogOutMdpi);
         Animator translateYLogOutAnimator = AnimationsUtil.translateYAnimation(textLogOut, translateYLogOutDp, AnimationsUtil.ANIMATION_DURATION_150_MS);
         animatorSetLogOut.play(fadeInLogOutAnimator).after(AnimationsUtil.ANIMATION_DELAY_1000_MS)
                 .with(translateYLogOutAnimator);
@@ -310,10 +336,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void fadeInAndTranslateHeaderContainer() {
+        int pxYHeaderContainerMdpi = -55;
+        int actualPxYHeaderContainerMdpi = Math.round(pxYHeaderContainerMdpi * screenDensityMultiplier);
+
         AnimatorSet animatorSetHeaderContainer = new AnimatorSet();
         Animator fadeInHeaderContainerAnimator = AnimationsUtil.fadeAnimation(headerContainer, AnimationsUtil.FULLY_TRANSPARENT,
                 AnimationsUtil.FULLY_VISIBLE, AnimationsUtil.ANIMATION_DURATION_400_MS);
-        float translateYHeaderContainerDp = AnimationsUtil.convertPxToDip(MainActivity.this, -200);
+        float translateYHeaderContainerDp = AnimationsUtil.convertPxToDip(MainActivity.this, actualPxYHeaderContainerMdpi);
         Animator translateYHeaderContainerAnimator = AnimationsUtil.translateYAnimation(headerContainer, translateYHeaderContainerDp,
                 AnimationsUtil.ANIMATION_DURATION_400_MS);
         animatorSetHeaderContainer.play(fadeInHeaderContainerAnimator)
