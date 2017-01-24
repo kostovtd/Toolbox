@@ -18,11 +18,10 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             android:alpha="0"
-            android:gravity="center_vertical"
+            android:gravity="bottom"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:layout_marginTop="100dp"
-            android:layout_weight="20"
+            android:layout_weight="30"
             android:id="@+id/header_container">
 
             <TextView
@@ -54,10 +53,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:layout_weight="40"
+            android:layout_weight="30"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:gravity="center_vertical">
+            android:gravity="bottom">
 
             <TextView
                 android:id="@+id/text_contacts"
